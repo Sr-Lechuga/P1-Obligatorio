@@ -4,9 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos/estilos.css">
     <title>Censo 2023</title>
 </head>
 <body>
-    
+    <div class="container">
+        <div class="censador">
+            <form action="#" method="post">
+                <h1>Censador</h1>
+                <div class="social-container">
+                </div>
+                <p>Utiliza tu email para loguearte</p>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <a href="#">Olvidaste tu contraseña?</a>
+                <input type="button" value="Inicia sesion">
+            </form>
+        </div>
+        <div class="usuario">
+            <form action="#" method="post">
+                <h1>Usuario</h1>
+                <div class="social-container">
+                </div>
+                <p>Utiliza tu email para loguearte</p>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+                <a href="#">Olvidaste tu contraseña?</a>
+                <input type="button" value="Inicia sesion">
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-left">
+                    <h1>Bienvenido!</h1>
+                    <p>Para mantenerte conectado inicia sesion con tus datos</p>
+                    <input type="button" value="Inicia sesion" id="iniciar_sesion_cesores">
+                </div>
+                <div class="overlay-right">
+                    <h1>Gracias por venir!</h1>
+                    <p>Ingresa tus datos para ser censado</p>
+                    <input type="button" value="Inicia sesion" id="iniciar_sesion_usuarios">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="codigo/codigo.js"></script>
 </body>
 </html>
