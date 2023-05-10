@@ -20,7 +20,6 @@ body{
     background: #F6F5F7;
     font-family: 'poppins', sans-serif;
     min-height: 100vh;
-    margin: 10%;
 }
 
 .container{
@@ -33,9 +32,11 @@ body{
     overflow: hidden;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
                 0 10px 10px rgba(0, 0, 0, 0.22);
+    caret-color: transparent;
+    cursor: default;
 }
 
-.container .censador, .usuario{
+.container .censador,.container .usuario{
     position: absolute;
     top: 0;
     height: 100%;
@@ -51,16 +52,26 @@ body{
     }
 
     .container.right-panel-active .censador{
-        right: 0;
         left: 50%;
         opacity: 1;
-        z-index: 1;
+        z-index: 2;
+        transition: all 0.6s ease-in-out;
     }
 
-.usuario{
-    width: 50%;
-    z-index: 2;
-}
+    .usuario{
+        left: 0;
+        width: 50%;
+        opacity: 1;
+        z-index: 2;
+        transition: all 0.6s ease-in-out;
+    }
+
+    .container.right-panel-active .usuario{
+        left: 50%;
+        opacity: 0;
+        z-index: 1;
+        transition: all 0.6s ease-in-out;
+    }
 
 form{
     display: flex;
@@ -76,7 +87,6 @@ form{
 h1{
     font-weight: 600;
     margin: 0;
-
 }
 
 p{
@@ -95,6 +105,7 @@ input{
     border-radius: 5px;
     border: none;
     outline: none;
+    caret-color: #000;
 }
 
 a{
@@ -194,14 +205,15 @@ a{
     transform: translateX(0);
     transition: all 0.6s ease-in-out;
 }   
-.overlay-left, .overlay-right i{
+.overlay-left i, .overlay-right i{
     position: relative;
     bottom: 0;
-    font-size: 24px;
+    font-size: 32px;
     font-weight: 600;
     color: #fff;
     cursor: pointer;
     caret-color: transparent;
+    top: 20%;
 }
 
 .overlay-left{
@@ -210,7 +222,6 @@ a{
 
 .overlay-left i{
     left: 50%;
-    top: 20%;
 }
 
 .overlay-right{
@@ -220,7 +231,6 @@ a{
 
 .overlay-right i{
     right: 50%;
-    top: 20%;
 }
 
 .container.right-panel-active .overlay-left{
