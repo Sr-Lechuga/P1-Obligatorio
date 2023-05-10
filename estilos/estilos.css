@@ -8,7 +8,7 @@
     --main-color: #ff4b2b;
 }
 
-.container.container.right-panel-active{
+.container.container.censadores{
     --main-color: #2b4bff;
 }
 
@@ -51,7 +51,7 @@ body{
         transition: all 0.6s ease-in-out;
     }
 
-    .container.right-panel-active .censador{
+    .container.censadores .censador{
         left: 50%;
         opacity: 1;
         z-index: 2;
@@ -66,7 +66,7 @@ body{
         transition: all 0.6s ease-in-out;
     }
 
-    .container.right-panel-active .usuario{
+    .container.censadores .usuario{
         left: 50%;
         opacity: 0;
         z-index: 1;
@@ -145,17 +145,24 @@ a{
     transform: scale(0.9);
 }
 
-#iniciar_sesion_censores, #iniciar_sesion_usuarios{
+#iniciar_sesion_censadores, #iniciar_sesion_usuarios{
+    position: absolute;
+    width: 80%;
+    top: 60%;
     background-color: transparent;
     border: 2px solid #fff;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.6 ease-in-out;
 }
 
-.container.right-panel-active #iniciar_sesion_censores{
-    z-index: 2;
-}
-
-.container.right-panel-active #iniciar_sesion_usuarios{
-    z-index: 2;
+#registrar_censadores, #registrar_usuarios{
+    position: absolute;
+    width: 80%;
+    top: 60%;
+    background-color: transparent;
+    border: 2px solid #fff;
+    transition: all 0.6 ease-in-out;
 }
 
 .overlay-container{
@@ -169,7 +176,7 @@ a{
     z-index: 3;
 }
 
-.container.right-panel-active .overlay-container{
+.container.censadores .overlay-container{
     transform: translateX(-100%);
 }
 
@@ -185,7 +192,7 @@ a{
     transition: all 0.6s ease-in-out;
 }
 
-.container.right-panel-active .overlay{
+.container.censadores .overlay{
     transform: translateX(50%);
     background: linear-gradient(to left, #284bff, #8c22ff);
     transition: all 0.6s ease-in-out;
@@ -233,10 +240,30 @@ a{
     right: 50%;
 }
 
-.container.right-panel-active .overlay-left{
+.container.censadores .overlay-left{
     transform: translateX(0);
 }
 
-.container.right-panel-active .overlay-right{
+.container.censadores .overlay-right{
     transform: translateX(20%);
+}
+
+.overlay-right.register #iniciar_sesion_usuarios{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.overlay-right.register #registrar_usuarios{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-left.register #iniciar_sesion_censadores{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.overlay-left.register #registrar_censadores{
+    opacity: 0;
+    pointer-events: none;
 }
