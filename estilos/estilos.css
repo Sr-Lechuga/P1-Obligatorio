@@ -8,7 +8,7 @@
     --main-color: #ff4b2b;
 }
 
-.container.container.censadores{
+.container.container.censadores-activo{
     --main-color: #2b4bff;
 }
 
@@ -21,57 +21,6 @@ body{
     font-family: 'poppins', sans-serif;
     min-height: 100vh;
 }
-
-.container{
-    position: relative;
-    min-width: 768px;
-    max-width: 100%;
-    min-height: 480px;
-    background: #FFF;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-                0 10px 10px rgba(0, 0, 0, 0.22);
-    caret-color: transparent;
-    cursor: default;
-}
-
-.container .censador,.container .usuario{
-    position: absolute;
-    top: 0;
-    height: 100%;
-    transition: all 0.6 ease-in-out;
-}
-
-    .censador{
-        left: 0;
-        width: 50%;
-        opacity: 0;
-        z-index: 1;
-        transition: all 0.6s ease-in-out;
-    }
-
-    .container.censadores .censador{
-        left: 50%;
-        opacity: 1;
-        z-index: 2;
-        transition: all 0.6s ease-in-out;
-    }
-
-    .usuario{
-        left: 0;
-        width: 50%;
-        opacity: 1;
-        z-index: 2;
-        transition: all 0.6s ease-in-out;
-    }
-
-    .container.censadores .usuario{
-        left: 50%;
-        opacity: 0;
-        z-index: 1;
-        transition: all 0.6s ease-in-out;
-    }
 
 form{
     display: flex;
@@ -113,9 +62,9 @@ a{
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
-
 }
 
+/* ***************************** Buttons in general ******************************* */
 .button{
     color: #fff;
     font-size: 12px;
@@ -130,10 +79,14 @@ a{
     cursor: pointer;
 }
 
+.button:active{
+    transform: scale(0.9);
+}
+
+/*Buttons according to type of user*/
 .censador .button{
     background: #2b4bff;
     border: 1px solid #2b4bff;
-
 }
 
 .usuario .button{
@@ -141,30 +94,45 @@ a{
     border: 1px solid #ff4b2b;
 }
 
-.button:active{
-    transform: scale(0.9);
+/* ******************************** Container ******************************* */
+.container{
+    position: relative;
+    min-width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+    background: #FFF;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+                0 10px 10px rgba(0, 0, 0, 0.22);
+    caret-color: transparent;
+    cursor: default;
 }
 
-#iniciar_sesion_censadores, #iniciar_sesion_usuarios{
-    position: absolute;
-    width: 80%;
-    top: 60%;
-    background-color: transparent;
-    border: 2px solid #fff;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.6 ease-in-out;
-}
+    .container .censador,.container .usuario{
+        position: absolute;
+        top: 0;
+        height: 100%;
+        transition: all 0.6 ease-in-out;
+    }
 
-#registrar_censadores, #registrar_usuarios{
-    position: absolute;
-    width: 80%;
-    top: 60%;
-    background-color: transparent;
-    border: 2px solid #fff;
-    transition: all 0.6 ease-in-out;
-}
+    .censador{
+        left: 0;
+        width: 50%;
+        opacity: 0;
+        z-index: 1;
+        transition: all 0.6s ease-in-out;
+    }
 
+    .usuario{
+        left: 0;
+        width: 50%;
+        opacity: 1;
+        z-index: 2;
+        transition: all 0.6s ease-in-out;
+    }
+
+/* ***************************** Overlay ************************* */
 .overlay-container{
     position: absolute;
     top: 0;
@@ -176,94 +144,128 @@ a{
     z-index: 3;
 }
 
-.container.censadores .overlay-container{
+    .overlay{
+        position: relative;
+        color: #fff;
+        background: #007400;
+        left: -100%;
+        height: 100%;
+        width: 200%;
+        background: linear-gradient(to right, #ff4b28, #ff228c);
+        transform: translateX(0);
+        transition: all 0.6s ease-in-out;
+    }
+
+        .overlay-left, .overlay-right{
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+            width: 50%;
+            top: 0;
+            padding: 0 40px;
+            text-align: center;
+            transform: translateX(0);
+            transition: all 0.6s ease-in-out;
+        } 
+
+        .overlay-left{
+            transform: translateX(-20%);
+        }
+
+        .overlay-right{
+            right: 0;
+            transform: translateX(0);
+        }
+
+            .overlay-left i, .overlay-right i{
+                position: relative;
+                bottom: 0;
+                font-size: 32px;
+                font-weight: 600;
+                color: #fff;
+                cursor: pointer;
+                caret-color: transparent;
+                top: 20%;
+            }
+
+            .overlay-left i{
+                left: 50%;
+            }
+
+            .overlay-right i{
+                right: 50%;
+            }
+
+            /*Overlay buttons*/
+            #iniciar_sesion_censadores, #iniciar_sesion_usuarios{
+                position: absolute;
+                width: 80%;
+                top: 60%;
+                background-color: transparent;
+                border: 2px solid #fff;
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.6 ease-in-out;
+            }
+
+            #registrar_censadores, #registrar_usuarios{
+                position: absolute;
+                width: 80%;
+                top: 60%;
+                background-color: transparent;
+                border: 2px solid #fff;
+                transition: all 0.6 ease-in-out;
+            }
+
+/* **************************** Container active status ***************************** */
+
+    .container.censadores-activo .usuario{
+        left: 50%;
+        opacity: 0;
+        z-index: 1;
+        transition: all 0.6s ease-in-out;
+    }
+
+    .container.censadores-activo .censador{
+        left: 50%;
+        opacity: 1;
+        z-index: 2;
+        transition: all 0.6s ease-in-out;
+    }
+
+/* ****************************** Overlay active status **************************** */
+.container.censadores-activo .overlay-container{
     transform: translateX(-100%);
 }
 
-.overlay{
-    position: relative;
-    color: #fff;
-    background: #007400;
-    left: -100%;
-    height: 100%;
-    width: 200%;
-    background: linear-gradient(to right, #ff4b28, #ff228c);
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
-}
+    .container.censadores-activo .overlay{
+        transform: translateX(50%);
+        background: linear-gradient(to left, #284bff, #8c22ff);
+        transition: all 0.6s ease-in-out;
+    }
 
-.container.censadores .overlay{
-    transform: translateX(50%);
-    background: linear-gradient(to left, #284bff, #8c22ff);
-    transition: all 0.6s ease-in-out;
-}
+        .container.censadores-activo .overlay-left{
+            transform: translateX(0);
+        }
 
-.overlay-left, .overlay-right{
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    height: 100%;
-    width: 50%;
-    top: 0;
-    padding: 0 40px;
-    text-align: center;
-    transform: translateX(0);
-    transition: all 0.6s ease-in-out;
-}   
-.overlay-left i, .overlay-right i{
-    position: relative;
-    bottom: 0;
-    font-size: 32px;
-    font-weight: 600;
-    color: #fff;
-    cursor: pointer;
-    caret-color: transparent;
-    top: 20%;
-}
+        .container.censadores-activo .overlay-right{
+            transform: translateX(20%);
+        }
 
-.overlay-left{
-    transform: translateX(-20%);
-}
+            .overlay-right.register #registrar_usuarios{
+                opacity: 0;
+                pointer-events: none;
+            }
 
-.overlay-left i{
-    left: 50%;
-}
+            .overlay-left.register #iniciar_sesion_censadores{
+                opacity: 1;
+                pointer-events: all;
+            }
 
-.overlay-right{
-    right: 0;
-    transform: translateX(0);
-}
-
-.overlay-right i{
-    right: 50%;
-}
-
-.container.censadores .overlay-left{
-    transform: translateX(0);
-}
-
-.container.censadores .overlay-right{
-    transform: translateX(20%);
-}
-
-.overlay-right.register #iniciar_sesion_usuarios{
-    opacity: 1;
-    pointer-events: all;
-}
-
-.overlay-right.register #registrar_usuarios{
-    opacity: 0;
-    pointer-events: none;
-}
-
-.overlay-left.register #iniciar_sesion_censadores{
-    opacity: 1;
-    pointer-events: all;
-}
-
-.overlay-left.register #registrar_censadores{
-    opacity: 0;
-    pointer-events: none;
-}
+            .overlay-left.register #registrar_censadores{
+                opacity: 0;
+                pointer-events: none;
+            }

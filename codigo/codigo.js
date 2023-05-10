@@ -15,17 +15,17 @@ const flechaIzquierda = document.querySelector(".overlay-right i"),
       btniniciarSesionUsuario = document.querySelector("#iniciar_sesion_usuarios");
 
 flechaIzquierda.addEventListener("click", () => {
-    contenedor.classList.toggle("censadores");
+    contenedor.classList.toggle("censadores-activo");
 });
 
 flechaDerecha.addEventListener("click", () => {
-    contenedor.classList.toggle("censadores");
+    contenedor.classList.toggle("censadores-activo");
 });
 
 btnRegistrarCensor.addEventListener("click", () =>{
     ladoIzquierdo.classList.toggle("register");
     document.querySelector(".censador [name=nombre]").style.display = "block";
-    document.querySelector(".censador p").innerHTML = "Utiliza tu nombre y mail para registrarte";
+    document.querySelector(".censador p").innerHTML = "Utiliza tu nombre y usuario para registrarte";
     document.querySelector(".censador .button").value = TEXTO_REGISTRAR;
     document.querySelector(".censador a").innerHTML = TEXTO_A_UN_PASO;
     document.querySelector(".censador a").href = "#";
@@ -39,7 +39,7 @@ btniniciarSesionCensor.addEventListener("click", () =>{
     document.querySelector(".censador a").innerHTML = TEXTO_OLVIDO_CONTRASENIA;
 });
 
-btnRegistrarUsuario.addEventListener("click", () =>{
+/*btnRegistrarUsuario.addEventListener("click", () =>{
     ladoDerecho.classList.toggle("register");
     document.querySelector(".usuario [name=nombre]").style.display = "block";
     document.querySelector(".usuario p").innerHTML = "Utiliza tu nombre y mail para registrarte";
@@ -54,4 +54,4 @@ btniniciarSesionUsuario.addEventListener("click", () =>{
     document.querySelector(".usuario p").innerHTML = "Utiliza tu email para inciar sesi&oacute;n";
     document.querySelector(".usuario .button").value = TEXTO_INICIO_SESION;
     document.querySelector(".usuario a").innerHTML = TEXTO_OLVIDO_CONTRASENIA;
-});
+});*/
