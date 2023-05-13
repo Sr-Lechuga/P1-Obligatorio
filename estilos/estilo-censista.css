@@ -3,7 +3,10 @@
 :root{
     /* ************************ Colors ********************* */
     --text-color: #222;
+    --text-color-light: #EEE;
     --censist-gradient: linear-gradient(to left, #284bff, #8c22ff);
+    --censist-gradient-vertical: linear-gradient(to bottom, #284bff, #8c22ff);
+    --text-ilumination: 0 0 10px rgba(255, 255, 255, 0.4);
     /* ************************ Transitions ********************* */
     --tran-03: all .3s ease;
     --tran-06: all .6s ease;
@@ -17,23 +20,17 @@
 }
 
 body{
-    display: block;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
 }
 
-main {
-    position: relative;
-    width: 100%;
-    height: 85%;
-    top: 15%;
-}
-
 .header{
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -81,4 +78,77 @@ main {
         .navbar a:hover::before{
             width: 100%;
         }
+
+/* ********************** Main section ******************* */
+main {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 85%;
+    top: 15%;
+}
+
+    menu{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,1fr);
+        gap: 3%;
+        width: 80%;
+        height: 90%;
+        margin-top: 10px;
+    }
+
+        menu .main-option{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            background: var(--censist-gradient-vertical);
+            caret-color: transparent;
+            cursor: pointer;
+            transform: var(--tran-03);
+        }
+
+            .main-option span{
+                text-align: center;
+                font-size: 26px;
+                font-weight: 700;
+                color: var(--text-color-light);
+                transition: var(--tran-03);
+            }
+
+            menu .main-option:hover{
+                box-shadow: inset 0 0 15px #aaa,
+                            inset 0 0 10px #ccc,
+                            inset 0 0 5px #fff;
+                
+            }
+
+                menu .main-option:hover span{
+                    color: #FFFFFF;
+                    text-shadow: var(--text-ilumination);
+                }
+
+            .main-option .icon{
+                text-align: center;
+                font-size: 32px;
+                font-weight: 700;
+                color: var(--text-color-light);
+                transition: var(--tran-03);
+            }
+                menu .main-option:hover .icon{
+                    color: #FFFFFF;
+                    text-shadow: var(--text-ilumination);
+                }
+
+            .main-option p{
+                margin: 20px 20px;
+                text-align: center;
+                font-size: 12px;
+                font-weight: 400;
+                color: var(--text-color-light);
+                transition: var(--tran-03);
+            }
 
