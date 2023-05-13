@@ -12,7 +12,7 @@ const flechaIzquierda = document.querySelector(".overlay-right i"),
       btnRegistrarCensor = document.querySelector("#registrar_censadores"),
       btnRegistrarUsuario = document.querySelector("#registrar_usuarios"),
       btniniciarSesionCensor = document.querySelector("#iniciar_sesion_censadores"),
-      btniniciarSesionUsuario = document.querySelector("#iniciar_sesion_usuarios");
+      btnIngresarInvitado = document.querySelector(".usuario .button");
 
 flechaIzquierda.addEventListener("click", () => {
     contenedor.classList.toggle("censadores-activo");
@@ -46,12 +46,8 @@ btniniciarSesionCensor.addEventListener("click", () =>{
     document.querySelector(".usuario .button").value = TEXTO_REGISTRAR;
     document.querySelector(".usuario a").innerHTML = TEXTO_A_UN_PASO;
     document.querySelector(".usuario a").href = "#";
-});
-
-btniniciarSesionUsuario.addEventListener("click", () =>{
-    ladoDerecho.classList.toggle("register");
-    document.querySelector(".usuario [name=nombre]").style.display = "none";
-    document.querySelector(".usuario p").innerHTML = "Utiliza tu email para inciar sesi&oacute;n";
-    document.querySelector(".usuario .button").value = TEXTO_INICIO_SESION;
-    document.querySelector(".usuario a").innerHTML = TEXTO_OLVIDO_CONTRASENIA;
 });*/
+
+btnIngresarInvitado.addEventListener("click", () =>{
+    window.location.assign("invitado-principal.html");
+});
