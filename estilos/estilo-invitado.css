@@ -4,9 +4,9 @@
     /* ************************ Colors ********************* */
     --text-color: #222;
     --text-color-light: #EEE;
-    --main-color: rgb(140,34,255);
-    --censist-gradient: linear-gradient(270deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
-    --censist-gradient-vertical: linear-gradient(50deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
+    --main-color: rgba(28,121,9,1);
+    --guest-gradient: linear-gradient(270deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
+    --guest-gradient-vertical: linear-gradient(70deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
     --text-ilumination: 0 0 10px rgba(255, 255, 255, 0.4);
 
     /* ************************   Shadows   ************************* */ 
@@ -81,7 +81,7 @@ body{
             left: 0;
             width: 0;
             height: 3px;
-            background: var(--censist-gradient);
+            background: var(--guest-gradient);
             transition: var(--tran-06);
         }
 
@@ -101,8 +101,8 @@ main {
 
     menu{
         display: grid;
-        grid-template-columns: repeat(2,1fr);
-        grid-template-rows: repeat(2,1fr);
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3,1fr);
         gap: 3%;
         width: 80%;
         height: 90%;
@@ -115,11 +115,11 @@ main {
             align-items: center;
             justify-content: center;
             border-radius: 40px;
-            background: var(--censist-gradient-vertical);
+            background: var(--guest-gradient-vertical);
+            opacity: 1;
             caret-color: transparent;
             cursor: pointer;
             box-shadow: var(--shadow-elevation-medium);
-            transform: var(--tran-03);
         }
 
             .main-option span{
@@ -127,13 +127,14 @@ main {
                 font-size: 26px;
                 font-weight: 700;
                 color: var(--text-color-light);
+                transition: var(--tran-03);
             }
 
             menu .main-option:hover{
                 box-shadow: inset 0 0 15px #aaa,
                             inset 0 0 10px #ccc,
                             inset 0 0 5px #fff;
-                transition: var(--tran-03);
+                transform: var(--tran-03);
             }
 
                 menu .main-option:hover span{
