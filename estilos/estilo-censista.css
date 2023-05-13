@@ -7,6 +7,7 @@
     --censist-gradient: linear-gradient(to left, #284bff, #8c22ff);
     --censist-gradient-vertical: linear-gradient(to bottom, #284bff, #8c22ff);
     --text-ilumination: 0 0 10px rgba(255, 255, 255, 0.4);
+
     /* ************************ Transitions ********************* */
     --tran-03: all .3s ease;
     --tran-06: all .6s ease;
