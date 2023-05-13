@@ -6,6 +6,10 @@
 
 :root{
     --main-color: #ff4b2b;
+    --guest-overlay-gradient: linear-gradient(270deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
+    --guest-main-color: rgba(28,121,9,1);
+    --censist-gradient-color: linear-gradient(270deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
+    --censist-main-color: rgb(140,34,255);
 }
 
 .container.container.censadores-activo{
@@ -85,13 +89,13 @@ a{
 
 /*Buttons according to type of user*/
 .censador .button{
-    background: #2b4bff;
-    border: 1px solid #2b4bff;
+    background: var(--censist-main-color);
+    border: 1px solid var(--censist-main-color);
 }
 
 .usuario .button{
-    background: #ff4b2b;
-    border: 1px solid #ff4b2b;
+    background: var(--guest-main-color);
+    border: 1px solid var(--guest-main-color);
 }
 
 /* ******************************** Container ******************************* */
@@ -151,7 +155,7 @@ a{
         left: -100%;
         height: 100%;
         width: 200%;
-        background: linear-gradient(to right, #ff4b28, #ff228c);
+        background: var(--guest-overlay-gradient);
         transform: translateX(0);
         transition: all 0.6s ease-in-out;
     }
@@ -243,7 +247,7 @@ a{
 
     .container.censadores-activo .overlay{
         transform: translateX(50%);
-        background: linear-gradient(to left, #284bff, #8c22ff);
+        background: var(--censist-gradient-color);
         transition: all 0.6s ease-in-out;
     }
 
