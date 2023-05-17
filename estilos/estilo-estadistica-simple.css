@@ -20,8 +20,8 @@
     -0.1px 17.1px 21.4px -1.6px hsl(var(--shadow-color) / 0.13);
 
     /* ************************ Transitions ********************* */
-    --tran-03: all .3s ease;
     --tran-06: all .6s ease;
+    --tran-09: all .9s ease-in;
 }
 
 *{
@@ -111,7 +111,13 @@ main {
     height: fit-content;
     top: 15%;
     caret-color: transparent;
+    opacity: 0;
+    transition: var(--tran-09);
 }
+main.activa {
+    opacity: 1;
+}
+
 
     .tabla-estadisticas{
         border-collapse: collapse;

@@ -1,4 +1,4 @@
-const btnIngresarDatos = document.querySelector(".main-option.ingresar");
+const btnIngresarDatos = document.querySelector(".main-option.ingresar"),
       btnEliminarDatos = document.querySelector(".main-option.eliminar"),
       btnConsultarEstadisticas = document.querySelector(".main-option.consultar");
 
