@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ********************* CSS ****************************** -->
+    <link rel="stylesheet" href="estilos/estilo-validar.css">
+    <!-- ********************* BoxIcons ****************************** -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Censo 2023</title>
+</head>
+<body class="censista">
+    <header class="header">
+        <a href="index.html" class="logo"><img src="img/logo_censo.svg" alt="logo"></a>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="gestionar-informacion.html">Ingresar informaci&oacute;n</a>
+            <a href="validar-datos.html">Consultar informaci&oacute;n</a>
+            <a href="reasignar.html">Reasignar censista</a>
+            <a href="#">Estad&iacute;sticas</a>
+        </nav>
+    </header>
+    <main class="contenedor-estadisticas">
+        <div class="seccion-validacion">
+            <div class="container-selector-persona">
+                <label for="s_persona">Busque la c&eacute;dula de la persona:</label>
+                <input type="text" id="i_cedula" placeholder="Ingrese la c&eacute;dula...">
+            </div>
+            <input type="button" value="Confirmar" id="btn_buscar">
+        </div>
+        <div class="seccion-tabla">
+            <table class="tabla-estadisticas">
+                <thead>
+                    <tr>
+                        <th>C&eacute;dula</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Estado</th>
+                        <th>Departamento</th>
+                        <th>Ultima modificaci&oacute;n</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>0.000.000-0</td>
+                        <td>Armando</td>
+                        <td>Paredes</td>
+                        <td>Esperando Verificaci&oacute;n</td>
+                        <td>Montevideo</td>
+                        <td>19/05/2023 02:34 PM</td>
+                    </tr>
+                    <tr>
+                        <td>2.222.222-2</td>
+                        <td>Elsa</td>
+                        <td>Pato</td>
+                        <td>Esperando Verificaci&oacute;n</td>
+                        <td>Montevideo</td>
+                        <td>14/05/2023 01:34 AM</td>
+                    </tr>
+                    <tr>
+                        <td>3.333.333-3</td>
+                        <td>Susana</td>
+                        <td>Oria</td>
+                        <td>Esperando Verificaci&oacute;n</td>
+                        <td>Canelones</td>
+                        <td>01/05/2023 09:34 PM</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="seccion-datos">
+            <div class="area contenedor-datos">
+                <div class="seccion nombre-apellido">
+                    <label for="i_nombre">Nombre*:</label>
+                    <input type="text" id="i_nombre" placeholder="Ingrese su nombre..." maxlength="70" required>
+                    <label for="i_apellido">Apellido*:</label>
+                    <input type="text" id="i_apellido" placeholder="Ingrese su apellido..." maxlength="70" required>
+                </div>
+                <div class="seccion edad">
+                    <label for="i_edad">Edad*:</label>
+                    <input type="number" id="i_edad" placeholder="Ingrese su edad..." min="0" max="130" required>
+                </div>
+                <div class="seccion locacion">
+                    <label for="s_departamento">Departamento*:</label>
+                    <select name="departamento" id="s_departamento" required>
+                        <option value="defecto" selected>Seleccione...</option>
+                    </select>
+                </div>
+                <div class="seccion ocupacion">
+                    <label for="s_ocupacion">Ocupacion*:</label>
+                    <select name="ocupacion" id="s_ocupacion" required>
+                        <option value="defecto" selected>Seleccione...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="area contenedor-validacion">
+                <input type="button" name="validacion" id="btn_validar" value="Validar datos" disabled>
+            </div>
+        </div>
+    </main>
+    <script src="codigo/reasignar.js"></script>
+</body>
+</html>

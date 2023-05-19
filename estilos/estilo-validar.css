@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+    /* ************************ Colors ********************* */
+    --text-color: #222;
+    --text-color-light: #EEE;
+    --main-color: rgba(28,121,9,1);
+    --gradient: linear-gradient(270deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
+    --gradient-vertical: linear-gradient(70deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
+    --text-ilumination: 0 0 10px rgba(255, 255, 255, 0.4);
+
+    /* ************************   Shadows   ************************* */ 
+    --colored-shadow: rgba(28,121,9,0.15);
+
+    --shadow-color: 0deg 0% 0%;
+    --shadow-elevation-medium:
+    0px 0.8px 1px hsl(var(--shadow-color) / 0.08),
+    0px 3.3px 4.1px -0.5px hsl(var(--shadow-color) / 0.1),
+    0px 7.5px 9.4px -1.1px hsl(var(--shadow-color) / 0.11),
+    -0.1px 17.1px 21.4px -1.6px hsl(var(--shadow-color) / 0.13);
+
+    --button-ilumination-hover: inset 0 0 7px #aaa,
+                                inset 0 0 3px #ccc,
+                                inset 0 0 1px #fff;
+
+    /* ************************ Transitions ********************* */
+    --tran-02: all .2s ease;
+    --tran-06: all .6s ease;
+    --tran-09: all .9s ease;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+
+body.censista{
+    --main-color: rgb(33, 9, 121);
+    --gradient: linear-gradient(270deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
+    --gradient-vertical: linear-gradient(50deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
+    
+    --colored-shadow: rgba(33, 9, 121,0.15);
+}
+
+
+.header{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    padding: 1% 5% 1% 2.5%;
+}
+
+    .logo{
+        position: relative;
+        width: 15%;
+        height: 100%;
+        text-decoration: none;
+        caret-color: transparent;
+    }
+
+    .navbar{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: nowrap;
+
+    }
+    .navbar a{
+        position: relative;
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: 600;
+        margin-left: 10px;
+        text-decoration: none;
+        text-align: center;
+        caret-color: transparent;
+    }
+
+        .navbar a::before{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: var(--tran-06);
+        }
+
+        .navbar a:hover::before{
+            width: 100%;
+        }
+
+/* ********************** Main section ******************* */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    top: 20%;
+    caret-color: transparent;
+    opacity: 0;
+    transition: var(--tran-09);
+}
+main.activa {
+    opacity: 1;
+}
+
+/* ****************************** Validacion *********************************/
+.seccion-validacion{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+    min-height: 100px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    padding: 20px;
+    border: 3px solid var(--main-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-elevation-medium);
+}
+
+    .seccion-validacion div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 30%;
+    }
+
+        .seccion-validacion label{
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .seccion-validacion input{
+            width: 90%;
+            margin-top: 5px;
+            font-weight: 400;
+            font-size: 20px;
+            caret-color: black;
+            border-radius: 5px;
+            text-indent: 10px;
+        }
+
+    .seccion-validacion #btn_buscar{
+        width: 25%;
+        height: fit-content;
+        font-size: 18px;
+        color: var(--text-color-light);
+        background: var(--gradient);
+        border-radius: 10px;
+        box-shadow: var(--shadow-elevation-medium);
+        transition: var(--tran-02);
+        cursor: pointer;
+    }
+
+    .seccion-validacion #btn_buscar:active{
+        transform: scale(96%);
+    }
+
+    .seccion-validacion #btn_buscar:hover{
+        box-shadow: var(--button-ilumination-hover);
+    }
+
+
+/* **************************** Tabla *************************************** */
+    .tabla-estadisticas{
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        border-radius: 7px 5px 0 0;
+        overflow: hidden;
+        box-shadow: var(--shadow-elevation-medium);
+    }
+
+    .tabla-estadisticas thead tr{
+        background: var(--gradient);
+        color: var(--text-color-light);
+        font-weight: 600;
+        cursor: default;
+    }
+
+    .tabla-estadisticas tbody tr{
+        height: auto;
+        border-bottom: 1px solid var(--text-color-light);
+        cursor: pointer;
+        pointer-events: all;
+        opacity: 1;
+        transition: all .1s;
+    }
+
+        .tabla-estadisticas tbody tr:nth-of-type(even){
+            background-color: var(--colored-shadow);
+        }
+
+        .tabla-estadisticas tbody tr:last-of-type{
+            border-bottom: 3px solid var(--main-color);
+        }
+
+    .tabla-estadisticas tbody td:first-of-type{
+        font-weight: 500;
+    }
+
+    .tabla-estadisticas tbody tr.activa{
+        font-weight: 600;
+        color: var(--main-color);
+    }
+
+    .tabla-estadisticas tbody tr.hidden{
+        position: absolute;
+        pointer-events: none;
+        height: 0;
+        opacity: 0;
+    }
+
+
+        .tabla-estadisticas th,
+        .tabla-estadisticas td{
+            text-align: center;
+            padding: 12px 15px;
+        }
+
+/* **************************** Datos ******************************** */
+.seccion-datos{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    height: 0;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    font-size: 20px;
+    padding: 20px;
+    border: 3px solid var(--main-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-elevation-medium);
+    opacity: 0;
+    transition: var(--tran-09);
+}
+
+.seccion-datos.activa{
+    opacity: 1;
+    height: fit-content;
+}
+
+    .area{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-self: center;
+        justify-content: space-around;
+        gap: 20px;
+        width: 100%;
+        height: fit-content;
+        margin-top: 2%;
+    }
+
+        .area .seccion{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: start;
+            width: 100%;
+        }
+
+            .area .seccion label{
+                margin-top: 1%;
+            }
+
+            .area .seccion input,
+            .area .seccion select{
+                width: 50%;
+                height: fit-content;
+                margin-left: 5%;
+                font-size: 20px;
+                text-indent: 10px;
+                border-radius: 5px;
+                caret-color: black;
+            }
+
+        .area.contenedor-validacion{
+            margin-top: 5%;
+            margin-bottom: 2%;
+        }
+
+        .area #btn_validar{
+            width: 90%;
+            justify-self: center;
+            align-self: center;
+            background: var(--gradient);
+            color: var(--text-color-light);
+            font-size: 20px;
+            font-weight: 600;
+            border-radius: 20px;
+            box-shadow: var(--shadow-elevation-medium);
+            transform: var(--tran-02);
+        }
+
+            #btn_validar:hover{
+                    box-shadow:var(--button-ilumination-hover);
+            }
+
+            #btn_validar:active{
+                transform: scale(95%);
+            }
