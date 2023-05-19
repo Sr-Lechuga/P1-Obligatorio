@@ -153,6 +153,7 @@ main.activa {
             width: 90%;
             font-weight: 400;
             font-size: 20px;
+            cursor: pointer;
         }
 
     .seccion-reasignacion #btn_reasignar{
@@ -164,6 +165,7 @@ main.activa {
         border-radius: 10px;
         box-shadow: var(--shadow-elevation-medium);
         transition: var(--tran-02);
+        cursor: pointer;
     }
 
     .seccion-reasignacion #btn_reasignar:active{
@@ -192,10 +194,12 @@ main.activa {
         background: var(--gradient);
         color: var(--text-color-light);
         font-weight: 600;
+        cursor: default;
     }
 
     .tabla-estadisticas tbody tr{
         border-bottom: 1px solid var(--text-color-light);
+        cursor: pointer;
     }
 
         .tabla-estadisticas tbody tr:nth-of-type(even){
