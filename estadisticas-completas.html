@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ********************* CSS ****************************** -->
+    <link rel="stylesheet" href="estilos/estilo-estadistica-completa.css">
+    <!-- ********************* BoxIcons ****************************** -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Censo 2023</title>
+</head>
+<body class="censista">
+    <header class="header">
+        <a href="index.html" class="logo"><img src="img/logo_censo.svg" alt="logo"></a>
+        <nav class="navbar">
+            <a href="index.html">Inicio</a>
+            <a href="gestionar-informacion.html">Ingresar informaci&oacute;n</a>
+            <a href="validar-datos.html">Consultar informaci&oacute;n</a>
+            <a href="reasignar.html">Reasignar censista</a>
+            <a href="#">Estad&iacute;sticas</a>
+        </nav>
+    </header>
+    <main class="contenedor-estadisticas">
+        <div class="seccion-validacion">
+            <h3>Total de censados hasta el momento:</h3>
+            <span>1.325.527</span>
+        </div>
+        <div class="seccion-validados">
+            <div class="tabla">
+                <table class="tabla-completitud">
+                    <thead>
+                        <th>Censos validados</th>
+                        <th>Censos totales</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>756.345</td>
+                            <td>3.456.765</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grafico">
+                <div class="container">
+                    <div class="card">
+                        <div class="percent" style="--percentage:.85;">
+                            <div class="dot">
+                            </div>
+                            <svg>
+                                <circle cx="70" cy="70" r="70"></circle>
+                                <circle cx="70" cy="70" r="70"></circle>
+                            </svg>
+                            <div class="number">
+                                <h2>22<span>%</span></h2>
+                                <p>Verificados</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="seccion-tabla">
+            <table class="tabla-estadisticas">
+                <thead>
+                    <tr>
+                        <th>Departamento</th>
+                        <th>Censados</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="activa">
+                        <td>Artigas</td>
+                        <td>12.567</td>
+                        <td>43.8745</td>
+                    </tr>
+                    <tr>
+                        <td>Canelones</td>
+                        <td>132.084</td>
+                        <td>254.342</td>
+                    </tr>
+                    <tr>
+                        <td>Montevideo</td>
+                        <td>756.495</td>
+                        <td>1.525.234</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="selector-departamento">
+                <div class="controles">
+                    <label for="s_departamento">Departamento:</label>
+                    <select name="departamento" id="s_departamento">
+                        <option value="default">Seleccione...</option>
+                    </select>
+                </div>
+                <div class="container">
+                    <div class="card">
+                        <div class="percent" style="--percentage:.85;">
+                            <div class="dot">
+                            </div>
+                            <svg>
+                                <circle cx="70" cy="70" r="70"></circle>
+                                <circle cx="70" cy="70" r="70"></circle>
+                            </svg>
+                            <div class="number">
+                                <h2>28<span>%</span></h2>
+                                <p>Menores</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="percent" style="--percentage:.85;">
+                            <div class="dot">
+                            </div>
+                            <svg>
+                                <circle cx="70" cy="70" r="70"></circle>
+                                <circle cx="70" cy="70" r="70"></circle>
+                            </svg>
+                            <div class="number">
+                                <h2>72<span>%</span></h2>
+                                <p>Mayores</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    <script src="codigo/estadistica-completa.js"></script>
+</body>
+</html>

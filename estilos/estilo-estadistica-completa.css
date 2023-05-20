@@ -1,0 +1,459 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+    /* ************************ Colors ********************* */
+    --text-color: #222;
+    --text-color-light: #EEE;
+    --main-color: rgba(28,121,9,1);
+    --gradient: linear-gradient(270deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
+    --gradient-vertical: linear-gradient(70deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
+    --text-ilumination: 0 0 10px rgba(255, 255, 255, 0.4);
+
+    /* ************************   Shadows   ************************* */ 
+    --colored-shadow: rgba(28,121,9,0.15);
+
+    --shadow-color: 0deg 0% 0%;
+    --shadow-elevation-medium:
+    0px 0.8px 1px hsl(var(--shadow-color) / 0.08),
+    0px 3.3px 4.1px -0.5px hsl(var(--shadow-color) / 0.1),
+    0px 7.5px 9.4px -1.1px hsl(var(--shadow-color) / 0.11),
+    -0.1px 17.1px 21.4px -1.6px hsl(var(--shadow-color) / 0.13);
+
+    --button-ilumination-hover: inset 0 0 7px #aaa,
+                                inset 0 0 3px #ccc,
+                                inset 0 0 1px #fff;
+
+    /* ************************ Transitions ********************* */
+    --tran-02: all .2s ease;
+    --tran-06: all .6s ease;
+    --tran-09: all .9s ease;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow-y: scroll;
+}
+
+body.censista{
+    --main-color: rgb(33, 9, 121);
+    --gradient: linear-gradient(270deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
+    --gradient-vertical: linear-gradient(50deg, rgb(0, 26, 156) 0%, rgb(140,34,255) 42%, rgb(28,1,56) 100%);
+    
+    --colored-shadow: rgba(33, 9, 121,0.15);
+}
+
+
+.header{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFF;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15%;
+    padding: 1% 5% 1% 2.5%;
+}
+
+    .logo{
+        position: relative;
+        width: 15%;
+        height: 100%;
+        text-decoration: none;
+        caret-color: transparent;
+    }
+
+    .navbar{
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-wrap: nowrap;
+
+    }
+    .navbar a{
+        position: relative;
+        font-size: 16px;
+        color: var(--text-color);
+        font-weight: 600;
+        margin-left: 10px;
+        text-decoration: none;
+        text-align: center;
+        caret-color: transparent;
+    }
+
+        .navbar a::before{
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient);
+            transition: var(--tran-06);
+        }
+
+        .navbar a:hover::before{
+            width: 100%;
+        }
+
+/* ********************** Main section ******************* */
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    top: 20%;
+    caret-color: transparent;
+    opacity: 0;
+    transition: var(--tran-09);
+}
+
+    main.activa {
+        opacity: 1;
+    }
+
+
+
+/* ****************************** Seccion validacion *********************************/
+.seccion-validacion{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 90%;
+    min-height: 100px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    padding: 20px;
+    border: 3px solid var(--main-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-elevation-medium);
+}
+
+    .seccion-validacion span
+    {
+        font-size: 1.4em;
+        font-weight: 600;
+        color: var(--main-color);
+    }
+
+/* ******************************************* Seccion validados ******************************************/
+.seccion-validados
+{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 70%;
+    padding: 20px;
+}
+
+.seccion-tabla
+{
+    display: flex;
+    justify-content: space-evenly;
+    width: 70%;
+    align-items: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/**************************************** Tabla completitud *************************************************/
+.tabla-completitud{
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+    border-radius: 7px 5px 0 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-elevation-medium);
+}
+
+.tabla-completitud thead tr{
+    background: var(--gradient);
+    color: var(--text-color-light);
+    font-weight: 600;
+    cursor: default;
+}
+
+.tabla-completitud tbody tr{
+    height: auto;
+    border-bottom: 1px solid var(--text-color-light);
+    cursor: pointer;
+    pointer-events: all;
+    opacity: 1;
+    transition: all .1s;
+}
+
+    .tabla-completitud tbody tr:last-of-type{
+        border-bottom: 3px solid var(--main-color);
+    }
+
+        .tabla-completitud tbody td:nth-of-type(2){
+            font-weight: 600;
+        }
+
+    .tabla-completitud th,
+    .tabla-completitud td{
+        text-align: center;
+        padding: 12px 15px;
+    }
+
+/* ***************************** Grafico *******************************************************/
+.container
+{
+    position: relative;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    flex-wrap: wrap;
+    width: fit-content;
+    gap: 40px;
+}
+
+    .container .card
+    {
+        display: flex;
+        justify-content: center; align-items: center;
+        position: relative;
+        width: 30%;
+        height: auto;
+    }
+
+        .container .card .percent
+        {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+            .container .card .percent svg 
+            {
+                position: relative;
+                width: 150px;
+                height: 150px;
+                transform: rotate(270deg);
+        }
+
+                .container .card .percent svg circle 
+                {
+                    width: 100%;
+                    height: 100%;
+                    fill: transparent;
+                    stroke-width: 2;
+                    stroke: rgba(140,34,255,.1);
+                    transform: translate(5px,5px);
+                }
+
+                .container .card .percent svg circle:nth-child(2)
+                {
+                    stroke: var(--main-color);
+                    stroke-dasharray: 440;
+                    stroke-dashoffset: calc(440 - (440 * var(--percentage)));
+                    opacity: 0;
+                    animation: fadeIn 1s linear forwards;
+                    animation-delay: 2.5s;
+                }
+
+            .container .card .percent .dot
+            {
+                position: absolute;
+                inset: 5px;
+                z-index: 100;
+                transform: rotate(calc(3.6deg * var(--percentage)));
+                animation: animateDot 2s linear forwards;
+            }
+
+            .container .card .percent .dot::before
+            {
+                content: '';
+                position: absolute;
+                top: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: var(--main-color);
+                box-shadow: 0 0 10px var(--main-color),
+                            0 0 30px var(--main-color);
+            }
+
+            .container .card .percent .number
+            {
+                position: absolute;
+                inset: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                opacity: 0;
+                animation: fadeIn 1s linear forwards;
+                animation-delay: 2.5s;
+            } 
+
+            .container .card .percent .number h2
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: var(--main-color);
+                font-weight: 700;
+                font-size: 2.5em;
+            }
+
+            .container .card .percent .number h2 span
+            {
+                font-weight: 300;
+                color: var(--main-color);
+                font-size: 0.5em;
+            }
+
+            .container .card .percent .number p
+            {
+                font-weight: 300;
+                font-size: 0.55em;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                color: var(--main-color);
+            }
+
+@keyframes animateDot 
+{
+    0%
+    {
+        transform: rotate(0%);
+    }
+    100%
+    {
+        transform: rotate(calc(360deg *var(--percentage)));
+    }
+}
+
+@keyframes fadeIn 
+{
+    0%
+    {
+        opacity: 0;
+    }
+    100%
+    {
+        opacity: 1;
+    }
+}
+
+/* **************************** Tabla Departamentos *************************************** */
+    .tabla-estadisticas{
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        min-width: 400px;
+        border-radius: 7px 5px 0 0;
+        overflow: hidden;
+        box-shadow: var(--shadow-elevation-medium);
+    }
+
+    .tabla-estadisticas thead tr{
+        background: var(--gradient);
+        color: var(--text-color-light);
+        font-weight: 600;
+        cursor: default;
+    }
+
+    .tabla-estadisticas tbody tr{
+        height: auto;
+        border-bottom: 1px solid var(--text-color-light);
+        cursor: pointer;
+        pointer-events: all;
+        opacity: 1;
+        transition: all .1s;
+    }
+
+        .tabla-estadisticas tbody tr:nth-of-type(even){
+            background-color: var(--colored-shadow);
+        }
+
+        .tabla-estadisticas tbody tr:last-of-type{
+            border-bottom: 3px solid var(--main-color);
+        }
+
+        .tabla-estadisticas tbody tr.activa{
+            font-weight: 600;
+            color: var(--main-color);
+        }
+        
+    .tabla-estadisticas tbody td:first-of-type{
+        font-weight: 500;
+    }
+
+    .tabla-estadisticas tbody tr.activa{
+        font-weight: 600;
+        color: var(--main-color);
+    }
+
+    .tabla-estadisticas tbody tr.hidden{
+        position: absolute;
+        pointer-events: none;
+        height: 0;
+        opacity: 0;
+    }
+
+
+        .tabla-estadisticas th,
+        .tabla-estadisticas td{
+            text-align: center;
+            padding: 12px 15px;
+        }
+
+/* *********************************** Selector  departamento ******************************* */
+.selector-departamento
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    height: fit-content;
+    width: fit-content;
+}
+
+    .selector-departamento .controles
+    {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+
+        .selector-departamento .controles label
+        {
+            font-size: 1.3em;
+            font-weight: 500;
+        }
+
+        .selector-departamento .controles select
+        {
+            font-size: 1.3em;
+            font-weight: 400;
+            min-width: 250px;
+        }
+
+    .selector-departamento .container
+    {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 40px;
+    }
+
