@@ -10,25 +10,24 @@
 </head>
 <body>
     <div class="container">
-        <div class="censador">
+        <div class="censista">
             <form action="#" method="post">
-                <h1>Censador</h1>
-                <p>Utiliza tu usuario para inciar sesi&oacute;n</p>
+                <h1>Censista</h1>
+                <p>Utiliza tu invitado para inciar sesi&oacute;n</p>
                 <input type="text" name="nombre" placeholder="Nombre" style="display: none;">
+                <p class="mensajes-error nombre"></p>
                 <input type="text" name="usuario" placeholder="Usuario" required>
+                <p class="mensajes-error usuario"></p>
                 <input type="password" name="password" placeholder="Contraseña" required>
+                <p class="mensajes-error contrasenia"></p>
                 <a href="#">¿Olvidaste tu contraseña?</a>
                 <input class="button" type="button" value="Inicia sesion">
             </form>
         </div>
-        <div class="usuario">
+        <div class="invitado">
             <form action="#" method="post">
                 <h1>Invitado</h1>
                 <p>Ingresa al portal para registrar tus datos en el censo</p>
-                <!-- <input type="text" name="nombre" placeholder="Nombre" style="display: none;">
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Contraseña" required>
-                <a href="#">¿Olvidaste tu contraseña?</a> -->
                 <input class="button" type="button" class="ingresar" value="Ingresa al portal">
             </form>
         </div>
@@ -37,20 +36,19 @@
                 <div class="overlay-left">
                     <h1>¡Bienvenido!</h1>
                     <p>Registrate para censar y validar</p>
-                    <input type="button" value="Iniciar sesion" class="button" id="iniciar_sesion_censadores" >
-                    <input type="button" value="Registrate" class="button" id="registrar_censadores">
+                    <input type="button" value="Iniciar sesion" class="button" id="iniciar_sesion_censistas" >
+                    <input type="button" value="Registrate" class="button" id="registrar_censistas">
                     <i class='bx bx-right-arrow-alt' ></i>
                 </div>
                 <div class="overlay-right">
                     <h1>¡Gracias por venir!</h1>
                     <p>Registrate para ser censado</p>
-                    <!-- <input type="button" value="iniciar sesion" class="button" id="iniciar_sesion_usuarios">
-                    <input type="button" value="Registrate" class="button" id="registrar_usuarios"> -->
                     <i class='bx bx-left-arrow-alt'></i>
                 </div>
             </div>
         </div>
     </div>
-    <script src="codigo/codigo.js"></script>
+    <script src="codigo/comportamiento-css-index.js"></script>
+    <script src="codigo/inicio-sesion.js"></script>
 </body>
 </html>
