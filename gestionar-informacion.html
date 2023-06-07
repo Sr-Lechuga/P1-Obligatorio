@@ -24,6 +24,7 @@
     <main class="ingresar-informacion">
         <div class="area contenedor-busqueda">
             <label for="i_cedula">Ingrese su c&eacute;dula</label>
+            <p class="mensaje-error cedula"></p>
             <input type="text" id="i_cedula" placeholder="Ej.: 1.234.567-8" required>
         </div>
         <div class="area contenedor-datos">
@@ -51,10 +52,10 @@
             </div>
         </div>
         <div class="area contenedor-validacion">
-            <input type="button" name="validacion" id="btn_validar" value="Validar datos" disabled>
+            <input type="button" name="validacion" id="btn_validar" value="Validar datos" >
             <p id="p_censista_asignado" hidden>Se le asigno el censista: <b>Armando Paredes</b></p>
         </div>
     </main>
-
+    <script src="codigo/ingresar-datos.js"></script>
 </body>
 </html>

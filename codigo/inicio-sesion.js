@@ -1,3 +1,4 @@
+
 class Censista{
     constructor(nombre,usuario,contrasenia){
         this.nombre = nombre;
@@ -97,7 +98,7 @@ function registrarCensista() {
 
     if (nuevoCensista !== "Registo invalido") {
         console.log(nuevoCensista);
-        //Registrar el censista en la base de datos
+        censistasRegistrados.push(nuevoCensista);
     }
 }
 
