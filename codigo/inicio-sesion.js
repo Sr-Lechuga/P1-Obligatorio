@@ -1,14 +1,5 @@
 
-class Censista{
-    constructor(nombre,usuario,contrasenia){
-        this.nombre = nombre;
-        this.usuario = usuario;
-        this.contrasenia = contrasenia;
-    }
-}
-
-let censistasRegistrados = [];
-censistasRegistrados.push(new Censista("Jonttan","sr.lechuga","Sie7e"));
+const mi_sistema = new Sistema();
 
 /* **************************************************** Reutilizables ********************************************************** */
 function mostrarMensajeError(contenedor,mensaje,inputGenerador) {
@@ -25,80 +16,51 @@ function borrarMensajeError(contenedor,input) {
 }
 
 /* **************************************************** Registro Censista ********************************************************** */
-function esContraseniaValida(inputContrasenia) {
-    const contenedorError = document.querySelector(".censista .mensajes-error.contrasenia"),
-          contrasenia = inputContrasenia.value;
 
-    let formatoIncorrecto = contrasenia.length < 5; //Al menos 5 caracteres
-    formatoIncorrecto = formatoIncorrecto || contrasenia.match(/[A-Z]/g) === null; //Contiene mayuscula
-    formatoIncorrecto = formatoIncorrecto || contrasenia.match(/[a-z]/g) === null; //Contiene minuscula
-    formatoIncorrecto = formatoIncorrecto || contrasenia.match(/[0-9]/g) === null; //Contiene numero
+function mostrarErroresRegistro(errores) {
+    /*Elementos (usados para CSS)*/
+    /* Inputs */
+    const inputNombre = document.querySelector(".censista [name='nombre']"),
+    inputUsuario = document.querySelector(".censista [name='usuario']"),
+    inputContrasenia = document.querySelector(".censista [name='password']"),
+    /* Contenedores*/
+    contenedorNombre = document.querySelector(".censista .mensajes-error.nombre"),
+    contenedorUsuario = document.querySelector(".censista .mensajes-error.usuario"),
+    contenedorContrasenia = document.querySelector(".censista .mensajes-error.contrasenia");
 
-    if (inputContrasenia.value.length <= 0) {
-        mostrarMensajeError(contenedorError,"Ingrese una contraseña, el campo no puede ser vacío.",inputContrasenia);
-    } else if (formatoIncorrecto){
-        mostrarMensajeError(contenedorError,"Contraseña invalida. Debe tener al menos 5 caracteres y contener 1 mayúscula, 1 minúscula y un número.",inputContrasenia);
-    }else{
-        borrarMensajeError(contenedorError,inputContrasenia);
-    }
+    borrarMensajeError(contenedorNombre,inputNombre);
+    borrarMensajeError(contenedorUsuario,inputUsuario);
+    borrarMensajeError(contenedorContrasenia,inputContrasenia);
 
-    return (inputContrasenia.value.length > 0 && !formatoIncorrecto);
-}
-
-function esUsuarioValido(inputUsuario){
-    const contenedorError = document.querySelector(".censista .mensajes-error.usuario");
-
-    if (inputUsuario.value.length <= 0) {
-        mostrarMensajeError(contenedorError,"Ingrese un nombre de usuario, el campo no puede ser vacío.",inputUsuario);
-    } else if (inputUsuario.value === "Solomeo") {
-        mostrarMensajeError(contenedorError,"Ya existe un usuario con ese nombre. Intente nuevamente con uno nuevo.",inputUsuario);
-    }else{
-        borrarMensajeError(contenedorError,inputUsuario);
-    }
-
-    return inputUsuario.value !== "Solomeo" && inputUsuario.value.length > 0;
-}
-
-function esNombreValido(inputNombre) {
-    const contenedorError = document.querySelector(".censista .mensajes-error.nombre");
-
-    if (inputNombre.value.length <= 0){
-        mostrarMensajeError(contenedorError,"Ingrese un nombre, el campo no puede ser vacío.",inputNombre);
-    }else{
-        borrarMensajeError(contenedorError,inputNombre);
-    }
-    return inputNombre.value.length > 0;
-}
-
-function validarRegistroCensista() {
-    const i_nombreCensista = document.querySelector(".censista [name='nombre']"),
-    i_usuarioCensista = document.querySelector(".censista [name='usuario']"),
-    i_contraseniaCensista = document.querySelector(".censista [name='password']"),
-    panelCensista = document.querySelector(".censista");
-    
-    i_nombreCensista.style.border = "";
-    i_usuarioCensista.style.border = "";
-    i_contraseniaCensista.style.border = "";
-
-    //De esta forma para que se validen todos los campos. Y con el valor previo de la variable al final, porque hace circuito corto
-    let credencialesValidas = esNombreValido(i_nombreCensista);
-    credencialesValidas = esUsuarioValido(i_usuarioCensista) && credencialesValidas;
-    credencialesValidas = esContraseniaValida(i_contraseniaCensista) && credencialesValidas;
-
-    if (!credencialesValidas) {
-        panelCensista.querySelector("input.button").scrollIntoView();
-        return "Registo invalido";
-    }
-
-    return new Censista(i_nombreCensista.value, i_usuarioCensista.value, i_contraseniaCensista.value);
+    errores.forEach(error => {
+        if (error.tipo === 'nombre' ) 
+            mostrarMensajeError(contenedorNombre,error.mensaje,inputNombre);
+        else if (error.tipo === 'usuario' ) 
+            mostrarMensajeError(contenedorUsuario,error.mensaje,inputUsuario);
+        else
+            mostrarMensajeError(contenedorContrasenia,error.mensaje,inputContrasenia);
+    });
 }
 
 function registrarCensista() {
-    let nuevoCensista = validarRegistroCensista();
+    /*Elementos (usados para CSS)*/
+    const i_nombreCensista = document.querySelector(".censista [name='nombre']"),
+    i_usuarioCensista = document.querySelector(".censista [name='usuario']"),
+    i_contraseniaCensista = document.querySelector(".censista [name='password']");
 
-    if (nuevoCensista !== "Registo invalido") {
-        console.log(nuevoCensista);
-        censistasRegistrados.push(nuevoCensista);
+    /* Valores, usados para logica*/
+    const nombre = i_nombreCensista.value,
+          usuario = i_usuarioCensista.value,
+          contrasenia = i_contraseniaCensista.value;
+
+    /* Registrar censista devuelve un array con los errores encontrados al registrar */
+    let resultado = mi_sistema.registrarCensista(nombre,usuario,contrasenia);
+
+    mostrarErroresRegistro(resultado);
+
+    if (resultado.length === 0){
+        alert("Registrado exitosamente!");
+        document.querySelector("#iniciar_sesion_censistas").click();
     }
 }
 
