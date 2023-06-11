@@ -65,16 +65,6 @@ function registrarCensista() {
 }
 
 /* **************************************************** Inicio de Sesion Censista ********************************************************** */
-function esCombinacionValida(usuario,contrasenia){
-    let esValido = false;
-    censistasRegistrados.forEach(censista => {
-        //Al momento que encuentra un registro con usuario y contrasenia ingresados, temrina el bucle
-        if (censista.usuario === usuario.toLowerCase()  && censista.contrasenia === contrasenia){
-            esValido = true;
-        }
-    });
-    return esValido;
-}
 
 function iniciarSesionCensista() {
     const usuario = document.querySelector(".censista [name='usuario']"),
@@ -86,7 +76,7 @@ function iniciarSesionCensista() {
     borrarMensajeError(errorContrasenia,contrasenia);
 
     if (usuario.value.length > 0 && contrasenia.value.length > 0) {
-        if (esCombinacionValida(usuario.value,contrasenia.value)){
+        if (mi_sistema.esIngresoValido(usuario.value,contrasenia.value)){
             window.location = "censista-principal.html";
         }
         else{

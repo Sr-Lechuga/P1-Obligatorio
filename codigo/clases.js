@@ -49,7 +49,7 @@ class Sistema {
         this.departamentos.push('no trabaja');
     }
 
-    /* Agrega censistas a la base de datos*/
+    /* Carga los valores inciales para los censitas registrados en el sistema*/
     preCargarCensistas(){
         this.censistas.push(new Censista('Solomeo','sparedes','Contrasenia1'));
         this.censistas.push(new Censista('Armando','abanquito','Contrasenia2'));
@@ -140,18 +140,18 @@ class Sistema {
     }
 
     /* Permite a un censita ingresar al sistema. Sera necesario cotejar sus credenciales con las existentes en el sistema */
-    ingresar(usuario,contrasenia){
+    esIngresoValido(usuario,contrasenia){
         let encontrado = false,
         i = 0;
 
         while (!encontrado && i < this.censistas.length) {
-            if (this.censistas[i].usuario === usuario && this.censistas[i].contrasenia === contrasenia){
-                return;
+            if (this.censistas[i].usuario === usuario.toLowerCase() && this.censistas[i].contrasenia === contrasenia){
+                return true;
             }
             i++;
         }
 
-        return "Usuario o Contraseña inválidos. Asegúrese que Bloq. Mayúsculas no esté activado.";
+        return false;
     }
 
     /* Pre-condicion: el censo no puede estar en estado CENSADO 
@@ -171,11 +171,6 @@ class Sistema {
     Permite a los censistas ingresar la informacion de un censo
     */
     ingresarDatosCenso(cedula){}
-
-    /* Carga los valores inciales para los censitas registrados en el sistema*/
-    cargaValoresInicialesCensistas(){
-
-    }
 
     /* Carga los valores inciales para los censos registrados en el sistema*/
     cargaValoresInicialesCensos(){
@@ -243,7 +238,7 @@ class Censista {
     constructor(nombre,usuario,contrasenia){
         this.nombre = nombre;
         this.usuario = usuario;
-        this.constrasenia = contrasenia;
+        this.contrasenia = contrasenia;
     }
 
     /* Devuelve true si la contraseña ingresada cumple con el formato establecido. En caso contrario devuelva false*/
