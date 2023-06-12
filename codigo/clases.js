@@ -3,6 +3,7 @@ const MIN_EDAD = 0,
       FORMATO_CEDULA = /[0-9]{1}\.[0-9]{3}\.[0-9]{3}\-[0-9]{1}/g,
       PRE_INGRESADO = 1, CENSADO = 2, //Estados de censo
       TOTAL_CENSOS = 3500000;
+      CODIGO_VALIDACION = [2,9,8,7,6,3,4];
 
 class Sistema {
     
@@ -13,12 +14,14 @@ class Sistema {
         this.departamentos = [];
         this.censita_logueado = '';
         this.totalCensos = TOTAL_CENSOS;
-        this.preCargarDepartamentos();
-        this.preCargarOcupaciones();
+        this.cargaValoresInicialesOcupaciones();
+        this.cargaValoresInicialesCensos();
+        this.cargaValoresInicialesCensistas();
+        this.cargaValoresInicialesCensos();
     }
 
     /* Agrega todos los valores disponibles para la base de datos de los departamentos*/
-    preCargarDepartamentos(){
+    cargaValoresInicialesDepartamentos(){
         this.departamentos.push('default');
         this.departamentos.push('montevideo');
         this.departamentos.push('canelones');
@@ -41,7 +44,7 @@ class Sistema {
     }
 
     /* Agrega todos los valores disponibles para la base de datos de las ocupaciones*/
-    preCargarOcupaciones(){
+    cargaValoresInicialesOcupaciones(){
         this.departamentos.push('default');
         this.departamentos.push('dependiente');
         this.departamentos.push('inependiente');
@@ -50,13 +53,32 @@ class Sistema {
     }
 
     /* Carga los valores inciales para los censitas registrados en el sistema*/
-    preCargarCensistas(){
+    cargaValoresInicialesCensistas(){
         this.censistas.push(new Censista('Solomeo','sparedes','Contrasenia1'));
         this.censistas.push(new Censista('Armando','abanquito','Contrasenia2'));
         this.censistas.push(new Censista('Jimmy','jneutron','Contrasenia3'));
         this.censistas.push(new Censista('Pedro','ppicapiedras','Contrasenia4'));
         this.censistas.push(new Censista('Sirius','sblack','Contrasenia5'));
         this.censistas.push(new Censista('Marcia','mnito','Contrasenia6'));
+    }
+
+    /* Carga los valores inciales para los censos registrados en el sistema*/
+    cargaValoresInicialesCensos(){
+        this.censos.push(new Censo('62125274','Patricio','Estrella',24,'Montevideo','No trabaja'));
+        this.censos.push(new Censo('51525358','Bob','Esponja',23,'Montevideo','Dependiente'));
+        this.censos.push(new Censo('15550945','Don','Cangrejo',42,'Montevideo','Independiente'));
+        this.censos.push(new Censo('60763347','Arenita','Mejillas',26,'Montevideo','Estudiante'));
+    }
+
+    /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/
+    formatearCedula(cedula){
+        let cedulaFormateada = '';
+        for (let i = 0; i < cedula.length; i++) {
+            if (cedula[i].match(/[0-9]/) !== null) {
+                cedulaFormateada += cedula[i]; 
+            }
+        }
+        return cedulaFormateada;
     }
 
     /* Valida que los elementos cargado en el selector de departamentos conicidan con los definidos en el array de departamentos */ 
@@ -77,8 +99,9 @@ class Sistema {
     recuperarEstadoCenso(cedula){
         let encontrado = false,
             i = 0,
-            estado = '';
-
+            estado = '',
+            cedula = this.formatearCedula(cedula);
+        
         while (!encontrado && i < this.censos.length) {
 
             encontrado = this.censos[i].cedula === cedula;
@@ -140,7 +163,7 @@ class Sistema {
     }
 
     /* Permite a un censita ingresar al sistema. Sera necesario cotejar sus credenciales con las existentes en el sistema */
-    esIngresoValido(usuario,contrasenia){
+    esIngresoSistemaValido(usuario,contrasenia){
         let encontrado = false,
         i = 0;
 
@@ -157,24 +180,122 @@ class Sistema {
     /* Pre-condicion: el censo no puede estar en estado CENSADO 
         Elimina la informacion pre-ingresada por un usuario.
     */
-    eliminarInformacionPreIngresada(cedula){}
+    eliminarInformacionPreIngresada(cedula){
+        let cedula = this.formatearCedula(cedula);
+            estado = this.recuperarEstadoCenso(cedula);
+
+        if (estado === CENSADO) {
+            return "La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."
+        }
+        else if(estado === PRE_INGRESADO){
+            for (let i = 0; i < this.censos.length; i++) {
+                if (this.censos[i].cedula === cedula) {
+                    this.censos.splice(i,1);
+                    return;
+                }
+            }
+        }else{
+            return "La cedula ingresada no tiene registros";
+        }
+    }
 
     /* Devuelve true, si la cedula no tiene ningun censo registrado en la base de datos*/
-    esCensoUnico(cedula){}
+    esCensoUnico(cedula){
+        cedula = this.formatearCedula(cedula);
+        for (let i = 0; i < this.censos.length; i++) {
+            if (censos[i].cedula === parseInt(cedula)) {
+                return false
+            }
+        }
+        return true;
+    }
 
     /* Pre-condicion: no puede existir un censo en la base de datos con la misma cedula
     Permite a los invitados ingresar la informacion de su censo, para que el censista los valide mas tarde
     */
-    preIngresarDatosCenso(cedula){}
+    preIngresarDatosCenso(cedula,nombre,apellido,edad,departamento,ocupacion){
+        let mensajesError = [];
+        let preIngreso = new Censo(cedula,nombre,apellido,edad,departamento,ocupacion);
+        
+        if(cedula.length <= 0)
+            mensajesError.push({tipo:'cedula', mensaje:"La cedula no puede estar vacia"});
+        else if (!preIngreso.esCedulaValida(cedula))
+            mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada no es correcta."});
+        else if(!this.esCensoUnico(cedula))
+            mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."});
+        
+        cedula = this.formatearCedula(cedula);
+        preIngreso.cedula = cedula;
+
+        if(!preIngreso.esNombreValido(nombre))
+            mensajesError.push({tipo:'nombre', mensaje:"El nombre no puede estar vacío."});
+
+        if(!preIngreso.esApellidoValido(apellido))
+            mensajesError.push({tipo:'apellido', mensaje:"El apellido no puede estar vacío."});
+
+        if(!preIngreso.esEdadValida(edad))
+            mensajesError.push({tipo:'edad', mensaje:`La edad tiene que estar entre ${MIN_EDAD} y ${MAX_EDAD} años inclusive.`});
+
+        if(!this.esDepartamentoValido(departamento))
+            mensajesError.push({tipo:'departamento', mensaje:"El departamento seleccionado no es valido."});
+
+        if(!this.esOcupacionValida(ocupacion))
+            mensajesError.push({tipo:'ocupacion', mensaje:"La ocupación seleccionada no es válida."});
+
+        /* Si hay errores */
+        if(mensajesError.length > 0){
+            return mensajesError;
+        /* Si no hay errores*/
+        }else{
+            let indexCensista = Math.floor(Math.random() * this.censistas.length);
+            preIngreso.censista_asignado = this.censistas[indexCensista].usuario;
+            preIngreso.estado = PRE_INGRESADO;
+            this.censos.push(preIngreso);
+            return mensajesError;
+        }
+    }
 
     /* Pre-condicion: no puede existir un censo en la base de datos con la misma cedula
     Permite a los censistas ingresar la informacion de un censo
     */
-    ingresarDatosCenso(cedula){}
-
-    /* Carga los valores inciales para los censos registrados en el sistema*/
-    cargaValoresInicialesCensos(){
+    ingresarDatosCenso(cedula,nombre,apellido,edad,departamento,ocupacion){
+        let mensajesError = [];
+        let preIngreso = new Censo(cedula,nombre,apellido,edad,departamento,ocupacion);
         
+        if(cedula.length <= 0)
+            mensajesError.push({tipo:'cedula', mensaje:"La cedula no puede estar vacia"});
+        else if (!preIngreso.esCedulaValida(cedula))
+            mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada no es correcta."});
+        else if(!this.esCensoUnico(cedula))
+            mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."});
+        
+        cedula = this.formatearCedula(cedula);
+        preIngreso.cedula = cedula;
+
+        if(!preIngreso.esNombreValido(nombre))
+            mensajesError.push({tipo:'nombre', mensaje:"El nombre no puede estar vacío."});
+
+        if(!preIngreso.esApellidoValido(apellido))
+            mensajesError.push({tipo:'apellido', mensaje:"El apellido no puede estar vacío."});
+
+        if(!preIngreso.esEdadValida(edad))
+            mensajesError.push({tipo:'edad', mensaje:`La edad tiene que estar entre ${MIN_EDAD} y ${MAX_EDAD} años inclusive.`});
+
+        if(!this.esDepartamentoValido(departamento))
+            mensajesError.push({tipo:'departamento', mensaje:"El departamento seleccionado no es valido."});
+
+        if(!this.esOcupacionValida(ocupacion))
+            mensajesError.push({tipo:'ocupacion', mensaje:"La ocupación seleccionada no es válida."});
+
+        /* Si hay errores */
+        if(mensajesError.length > 0){
+            return mensajesError;
+        /* Si no hay errores*/
+        }else{
+            preIngreso.estado = CENSADO;
+            this.censos.push(preIngreso);
+            return mensajesError;
+        }
     }
     
     /* Devuelve true si el usuario no esta registrado en la base de datos. Sera indiferente el uso de mayusculas*/
@@ -190,6 +311,79 @@ class Sistema {
         }
 
         return valido;
+    }
+
+    /* Devuelve true si el departamento ingresado no es el valor default y se encuentra entre los departamentos habilitados. En caso contrario devuelve false */
+    esDepartamentoValido(departamento){
+        let i = 0;
+
+        while(!valido && i < this.departamentos.length){
+            if (this.departamentos[i] === departamento){
+                return true && departamento !== 'default';
+            }
+            i++;
+        }
+
+        return false ;
+    }
+
+    
+    /* Devuelve true si la ocupacion ingresada no es vacia y su valor se encuentra entre las habilitadas para el Sistema. En caso contrario retorna false */
+    esOcupacionValida(ocupacion){
+        let i = 0;
+
+        while(!valido && i < this.ocupaciones.length){
+            if (this.ocupaciones[i] === ocupacion){
+                return true && departamento !== 'default';
+            }
+            i++;
+        }
+
+        return false; 
+    }
+
+    /*Permite reasignar a un censo PRE_INGRESADO el censista que se le asigno al azar.
+    El censista asignado no puede ser el mismo que se logueo al sistema, pero el censo debe pertenecer al mismo*/
+    reasignarCensista(cedula,usuario_censista){
+        if (usuario_censista === this.censita_logueado)
+            return "No se puede reasignar al mismo censista logueado.";
+        
+        cedula = this.formatearCedula(cedula)
+        let estado = this.recuperarEstadoCenso(cedula);
+
+        if(estado !== PRE_INGRESADO){
+            return "No se pude reasignar un censista a un censo que no esta pre-ingresado, el censo esta:" + 
+            estado === 2 ? "Censado" : "Aun sin ingresar al sistema";
+        
+        }else if (estado === PRE_INGRESADO) {
+            this.censos.forEach(censo =>{
+                if(censo.cedula === cedula){
+                    censo.censista_asignado = usuario_censista;
+                    return '';
+                }
+            });
+        }
+    }
+    /* Permite a un usuario con perfil de censista, validar la informacion pre ingresada por un invitado. 
+        En caso de error devuelve un mensaje definiendo el problema
+    */
+    validarPreIngresado(cedula){
+        cedula = this.formatearCedula(cedula);
+
+        let estado = this.recuperarEstadoCenso(cedula);
+        
+        if(estado !== PRE_INGRESADO){
+            return "No se pude validar a un censo que no esta pre-ingresado, el censo esta:" + 
+            estado === 2 ? "Censado" : "Aun sin ingresar al sistema";
+        
+        }else if (estado === PRE_INGRESADO) {
+            this.censos.forEach(censo =>{
+                if(censo.cedula === cedula){
+                    censo.estado = CENSADO;
+                    return '';
+                }
+            });
+        }
     }
 }
 
@@ -208,29 +402,34 @@ class Censo {
     }
 
     /* Recibe un string con el nombre y devuelve true si el nombre no es vacio. En caso contrario false */
-    esNombreValido(nombre){}
+    esNombreValido(nombre){
+        return nombre.length > 0;
+    }
 
     /* Recibe un string con el apellido y devuelve true si el nombre no es vacio. En caso contrario false */
-    esApellidoValido(apellido){}
+    esApellidoValido(apellido){
+        return apellido.length > 0;
+    }
 
     /* Recibe un entero, y devuelve true si este esta entre MIN_EDAD y MAX_EDAD inclusive. En caso contrario devuelve false */
-    esEdadValida(edad){}
+    esEdadValida(edad){
+        return MIN_EDAD <= edad && edad <= MAX_EDAD;
+    }
 
     /* Devuelve true si la cedula que recibe por parametro (String) no es vacia y tiene un formato valido */
-    esCedulaValida(cedula){}
+    esCedulaValida(cedula){
+        if (cedula.match(FORMATO_CEDULA) === null)
+            return false;
 
-    /* Devuelve true si el departamento ingresado no es el valor default y se encuentra entre los departamentos habilitados. En caso contrario devuelve false */
-    esDepartamentoValido(departamento){}
+        let digitoVerificador = 0;
+        for (let i = 0; i <= cedula.length-1; i++) {
+            digitoVerificador += cedula[i] * CODIGO_VALIDACION[i]; 
+        }
+        digitoVerificador = 10 - (digitoVerificador % 10);
 
-    /* Devuelve true si la ocupacion ingresada no es vacia y su valor se encuentra entre las habilitadas para el Sistema. En caso contrario retorna false */
-    esOcupacionValida(ocupacion){}
+        return parseInt(cedula[cedula.length-1]) === digitoVerificador;
+    }
 
-    /*Permite reasignar a un censo PRE_INGRESADO el censista que se le asigno al azar.
-      El censista asignado no puede ser el mismo que se logueo al sistema, pero el censo debe pertenecer al mismo*/
-    reasignarCensista(cedula,usuario_censista){}
-
-    /* Permite a un usuario con perfil de censista, validar la informacion pre ingresada por un invitado. */
-    validarPreIngresado(cedula){}
 }
 
 class Censista {

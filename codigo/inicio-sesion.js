@@ -76,7 +76,7 @@ function iniciarSesionCensista() {
     borrarMensajeError(errorContrasenia,contrasenia);
 
     if (usuario.value.length > 0 && contrasenia.value.length > 0) {
-        if (mi_sistema.esIngresoValido(usuario.value,contrasenia.value)){
+        if (mi_sistema.esIngresoSistemaValido(usuario.value,contrasenia.value)){
             window.location = "censista-principal.html";
         }
         else{
