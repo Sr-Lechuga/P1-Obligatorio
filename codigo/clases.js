@@ -1,7 +1,7 @@
 const MIN_EDAD = 0,
       MAX_EDAD = 130,
       FORMATO_CEDULA = /[0-9]{1}\.[0-9]{3}\.[0-9]{3}\-[0-9]{1}/g,
-      PRE_INGRESADO = 1, CENSADO = 2, //Estados de censo
+      PRE_INGRESADO = '1', CENSADO = '2', //Estados de censo
       TOTAL_CENSOS = 3500000;
       CODIGO_VALIDACION = [2,9,8,7,6,3,4];
 
@@ -14,6 +14,8 @@ class Sistema {
         this.censita_logueado = '';
         this.censos = [];
         this.totalCensos = TOTAL_CENSOS;
+        this.PRE_INGRESADO = PRE_INGRESADO;
+        this.CENSADO = CENSADO;
         this.cargaValoresInicialesOcupaciones();
         this.cargaValoresInicialesDepartamentos();
         this.cargaValoresInicialesCensistas();
@@ -112,7 +114,7 @@ class Sistema {
             i++;
         }
 
-        return parseInt(estado);
+        return estado;
     }
 
     /* Recupera toda la informacion necesaria para mostrar en la pagina de estadisticas completa (devuelve un objeto estadistica) */
@@ -409,9 +411,20 @@ class Sistema {
 
         for (let i = 0; i < this.censos.length; i++) {
             if (this.censos[i].cedula === cedulaFormateada) 
-                return i
+                return i;
         }
         return -1;
+    }
+
+    /*Recupera el indice del censo deseado con el numero de cedula requerido*/
+    recuperarNombreCensista(usuario){
+
+        for (let i = 0; i < this.censistas.length; i++) {
+            if (this.censistas[i].usuario === usuario) 
+                return this.censistas[i].nombre;
+        }
+        
+        return '';
     }
 }
 
