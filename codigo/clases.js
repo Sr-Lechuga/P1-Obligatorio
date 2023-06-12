@@ -283,6 +283,8 @@ class Sistema {
 
         if(!preIngreso.esEdadValida(edad))
             mensajesError.push({tipo:'edad', mensaje:`La edad tiene que estar entre ${MIN_EDAD} y ${MAX_EDAD} años inclusive.`});
+        else if(edad === '')
+            mensajesError.push({tipo:'edad', mensaje:`La edad no puede ser vacia.`});
 
         if(!this.esDepartamentoValido(departamento))
             mensajesError.push({tipo:'departamento', mensaje:"El departamento seleccionado no es valido."});
@@ -423,7 +425,7 @@ class Sistema {
             if (this.censistas[i].usuario === usuario) 
                 return this.censistas[i].nombre;
         }
-        
+
         return '';
     }
 }
