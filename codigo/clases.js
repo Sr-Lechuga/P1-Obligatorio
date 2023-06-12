@@ -402,6 +402,17 @@ class Sistema {
 
         return parseInt(cedulaFormateada[cedulaFormateada.length-1]) === digitoVerificador;
     }
+
+    /*Recupera el indice del censo deseado con el numero de cedula requerido*/
+    recuperarIndiceCenso(cedula){
+        let cedulaFormateada = this.formatearCedula(cedula);
+
+        for (let i = 0; i < this.censos.length; i++) {
+            if (this.censos[i].cedula === cedulaFormateada) 
+                return i
+        }
+        return -1;
+    }
 }
 
 class Censo {
