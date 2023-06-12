@@ -187,6 +187,11 @@ main {
                 width: 35%;
                 height: fit-content;
                 caret-color: black;
+                text-transform: capitalize;
+            }
+
+            .area .seccion select option{
+                text-transform: capitalize;
             }
 
         .area.contenedor-validacion{

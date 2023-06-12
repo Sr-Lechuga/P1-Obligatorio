@@ -9,13 +9,13 @@ class Sistema {
     
     constructor(){
         this.censistas = [];
-        this.censos = [];
         this.ocupaciones = [];
         this.departamentos = [];
         this.censita_logueado = '';
+        this.censos = [];
         this.totalCensos = TOTAL_CENSOS;
         this.cargaValoresInicialesOcupaciones();
-        this.cargaValoresInicialesCensos();
+        this.cargaValoresInicialesDepartamentos();
         this.cargaValoresInicialesCensistas();
         this.cargaValoresInicialesCensos();
     }
@@ -45,11 +45,11 @@ class Sistema {
 
     /* Agrega todos los valores disponibles para la base de datos de las ocupaciones*/
     cargaValoresInicialesOcupaciones(){
-        this.departamentos.push('default');
-        this.departamentos.push('dependiente');
-        this.departamentos.push('inependiente');
-        this.departamentos.push('estudiante');
-        this.departamentos.push('no trabaja');
+        this.ocupaciones.push('default');
+        this.ocupaciones.push('dependiente');
+        this.ocupaciones.push('inependiente');
+        this.ocupaciones.push('estudiante');
+        this.ocupaciones.push('no trabaja');
     }
 
     /* Carga los valores inciales para los censitas registrados en el sistema*/
@@ -64,10 +64,10 @@ class Sistema {
 
     /* Carga los valores inciales para los censos registrados en el sistema*/
     cargaValoresInicialesCensos(){
-        this.censos.push(new Censo('62125274','Patricio','Estrella',24,'Montevideo','No trabaja'));
-        this.censos.push(new Censo('51525358','Bob','Esponja',23,'Montevideo','Dependiente'));
-        this.censos.push(new Censo('15550945','Don','Cangrejo',42,'Montevideo','Independiente'));
-        this.censos.push(new Censo('60763347','Arenita','Mejillas',26,'Montevideo','Estudiante'));
+        this.preIngresarDatosCenso('6.212.527-4','Patricio','Estrella',24,'montevideo','no trabaja');
+        this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',23,'montevideo','dependiente');
+        this.ingresarDatosCenso('1.555.094-5','Don','Cangrejo',42,'montevideo','independiente');
+        this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'montevideo','estudiante');
     }
 
     /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/
@@ -100,11 +100,11 @@ class Sistema {
         let encontrado = false,
             i = 0,
             estado = '',
-            cedula = this.formatearCedula(cedula);
+            cedulaFormateada = this.formatearCedula(cedula);
         
         while (!encontrado && i < this.censos.length) {
 
-            encontrado = this.censos[i].cedula === cedula;
+            encontrado = this.censos[i].cedula === cedulaFormateada;
 
             if (encontrado) 
                 estado = this.censos[i].estado;
@@ -181,15 +181,15 @@ class Sistema {
         Elimina la informacion pre-ingresada por un usuario.
     */
     eliminarInformacionPreIngresada(cedula){
-        let cedula = this.formatearCedula(cedula);
-            estado = this.recuperarEstadoCenso(cedula);
+        let cedulaFormateada = this.formatearCedula(cedula),
+            estado = this.recuperarEstadoCenso(cedulaFormateada);
 
         if (estado === CENSADO) {
             return "La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."
         }
         else if(estado === PRE_INGRESADO){
             for (let i = 0; i < this.censos.length; i++) {
-                if (this.censos[i].cedula === cedula) {
+                if (this.censos[i].cedula === cedulaFormateada) {
                     this.censos.splice(i,1);
                     return;
                 }
@@ -201,9 +201,10 @@ class Sistema {
 
     /* Devuelve true, si la cedula no tiene ningun censo registrado en la base de datos*/
     esCensoUnico(cedula){
-        cedula = this.formatearCedula(cedula);
+        let cedulaFormateada = this.formatearCedula(cedula);
+
         for (let i = 0; i < this.censos.length; i++) {
-            if (censos[i].cedula === parseInt(cedula)) {
+            if (this.censos[i].cedula === parseInt(cedulaFormateada)) {
                 return false
             }
         }
@@ -219,13 +220,13 @@ class Sistema {
         
         if(cedula.length <= 0)
             mensajesError.push({tipo:'cedula', mensaje:"La cedula no puede estar vacia"});
-        else if (!preIngreso.esCedulaValida(cedula))
+        else if (!this.esCedulaValida(cedula))
             mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada no es correcta."});
         else if(!this.esCensoUnico(cedula))
             mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."});
         
-        cedula = this.formatearCedula(cedula);
-        preIngreso.cedula = cedula;
+        let cedulaFormateada = this.formatearCedula(cedula);
+        preIngreso.cedula = cedulaFormateada;
 
         if(!preIngreso.esNombreValido(nombre))
             mensajesError.push({tipo:'nombre', mensaje:"El nombre no puede estar vacío."});
@@ -259,18 +260,18 @@ class Sistema {
     Permite a los censistas ingresar la informacion de un censo
     */
     ingresarDatosCenso(cedula,nombre,apellido,edad,departamento,ocupacion){
-        let mensajesError = [];
-        let preIngreso = new Censo(cedula,nombre,apellido,edad,departamento,ocupacion);
+        let mensajesError = [],
+            preIngreso = new Censo(cedula,nombre,apellido,edad,departamento,ocupacion);
         
         if(cedula.length <= 0)
             mensajesError.push({tipo:'cedula', mensaje:"La cedula no puede estar vacia"});
-        else if (!preIngreso.esCedulaValida(cedula))
+        else if (!this.esCedulaValida(cedula))
             mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada no es correcta."});
         else if(!this.esCensoUnico(cedula))
             mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."});
         
-        cedula = this.formatearCedula(cedula);
-        preIngreso.cedula = cedula;
+        let cedulaFormateada = this.formatearCedula(cedula);
+        preIngreso.cedula = cedulaFormateada;
 
         if(!preIngreso.esNombreValido(nombre))
             mensajesError.push({tipo:'nombre', mensaje:"El nombre no puede estar vacío."});
@@ -315,7 +316,8 @@ class Sistema {
 
     /* Devuelve true si el departamento ingresado no es el valor default y se encuentra entre los departamentos habilitados. En caso contrario devuelve false */
     esDepartamentoValido(departamento){
-        let i = 0;
+        let i = 0,
+            valido = false;
 
         while(!valido && i < this.departamentos.length){
             if (this.departamentos[i] === departamento){
@@ -324,22 +326,22 @@ class Sistema {
             i++;
         }
 
-        return false ;
+        return valido ;
     }
-
     
     /* Devuelve true si la ocupacion ingresada no es vacia y su valor se encuentra entre las habilitadas para el Sistema. En caso contrario retorna false */
     esOcupacionValida(ocupacion){
-        let i = 0;
+        let i = 0,
+            valido = false;
 
         while(!valido && i < this.ocupaciones.length){
             if (this.ocupaciones[i] === ocupacion){
-                return true && departamento !== 'default';
+                return true && ocupacion !== 'default';
             }
             i++;
         }
 
-        return false; 
+        return valido; 
     }
 
     /*Permite reasignar a un censo PRE_INGRESADO el censista que se le asigno al azar.
@@ -348,8 +350,8 @@ class Sistema {
         if (usuario_censista === this.censita_logueado)
             return "No se puede reasignar al mismo censista logueado.";
         
-        cedula = this.formatearCedula(cedula)
-        let estado = this.recuperarEstadoCenso(cedula);
+        let cedulaFormateada = this.formatearCedula(cedula),
+            estado = this.recuperarEstadoCenso(cedulaFormateada);
 
         if(estado !== PRE_INGRESADO){
             return "No se pude reasignar un censista a un censo que no esta pre-ingresado, el censo esta:" + 
@@ -357,33 +359,48 @@ class Sistema {
         
         }else if (estado === PRE_INGRESADO) {
             this.censos.forEach(censo =>{
-                if(censo.cedula === cedula){
+                if(censo.cedula === cedulaFormateada){
                     censo.censista_asignado = usuario_censista;
                     return '';
                 }
             });
         }
     }
+
     /* Permite a un usuario con perfil de censista, validar la informacion pre ingresada por un invitado. 
         En caso de error devuelve un mensaje definiendo el problema
     */
     validarPreIngresado(cedula){
-        cedula = this.formatearCedula(cedula);
+        let cedulaFormateada = this.formatearCedula(cedula),
+            estado = this.recuperarEstadoCenso(cedulaFormateada);
 
-        let estado = this.recuperarEstadoCenso(cedula);
-        
         if(estado !== PRE_INGRESADO){
             return "No se pude validar a un censo que no esta pre-ingresado, el censo esta:" + 
             estado === 2 ? "Censado" : "Aun sin ingresar al sistema";
         
         }else if (estado === PRE_INGRESADO) {
             this.censos.forEach(censo =>{
-                if(censo.cedula === cedula){
+                if(censo.cedula === cedulaFormateada){
                     censo.estado = CENSADO;
                     return '';
                 }
             });
         }
+    }
+
+    /* Devuelve true si la cedula que recibe por parametro (String) no es vacia y tiene un formato valido */
+    esCedulaValida(cedula){
+        if (cedula.match(FORMATO_CEDULA) === null)
+            return false;
+
+        let cedulaFormateada = this.formatearCedula(cedula);
+        let digitoVerificador = 0;
+        for (let i = 0; i < cedulaFormateada.length-1; i++) {
+            digitoVerificador += cedulaFormateada[i] * CODIGO_VALIDACION[i]; 
+        }
+        digitoVerificador = 10 - (digitoVerificador % 10);
+
+        return parseInt(cedulaFormateada[cedulaFormateada.length-1]) === digitoVerificador;
     }
 }
 
@@ -415,21 +432,6 @@ class Censo {
     esEdadValida(edad){
         return MIN_EDAD <= edad && edad <= MAX_EDAD;
     }
-
-    /* Devuelve true si la cedula que recibe por parametro (String) no es vacia y tiene un formato valido */
-    esCedulaValida(cedula){
-        if (cedula.match(FORMATO_CEDULA) === null)
-            return false;
-
-        let digitoVerificador = 0;
-        for (let i = 0; i <= cedula.length-1; i++) {
-            digitoVerificador += cedula[i] * CODIGO_VALIDACION[i]; 
-        }
-        digitoVerificador = 10 - (digitoVerificador % 10);
-
-        return parseInt(cedula[cedula.length-1]) === digitoVerificador;
-    }
-
 }
 
 class Censista {
