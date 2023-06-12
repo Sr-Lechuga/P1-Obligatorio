@@ -47,7 +47,7 @@ class Sistema {
     cargaValoresInicialesOcupaciones(){
         this.ocupaciones.push('default');
         this.ocupaciones.push('dependiente');
-        this.ocupaciones.push('inependiente');
+        this.ocupaciones.push('independiente');
         this.ocupaciones.push('estudiante');
         this.ocupaciones.push('no trabaja');
     }
@@ -112,7 +112,7 @@ class Sistema {
             i++;
         }
 
-        return estado;
+        return parseInt(estado);
     }
 
     /* Recupera toda la informacion necesaria para mostrar en la pagina de estadisticas completa (devuelve un objeto estadistica) */
