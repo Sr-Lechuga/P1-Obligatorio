@@ -59,7 +59,7 @@ function registrarCensista() {
     mostrarErroresRegistro(resultado);
 
     if (resultado.length === 0){
-        alert("Registrado exitosamente!");
+        document.querySelector(".censista .mensajes-error.general").innerHTML = "Registrado exitosamente!";
         document.querySelector("#iniciar_sesion_censistas").click();
     }
 }
@@ -74,6 +74,8 @@ function iniciarSesionCensista() {
     
     borrarMensajeError(errorUsuario,usuario);
     borrarMensajeError(errorContrasenia,contrasenia);
+    borrarMensajeError(document.querySelector(".censista .mensajes-error.general"),usuario);
+    borrarMensajeError(document.querySelector(".censista .mensajes-error.general"),contrasenia);
 
     if (usuario.value.length > 0 && contrasenia.value.length > 0) {
         if (mi_sistema.esIngresoSistemaValido(usuario.value,contrasenia.value)){
