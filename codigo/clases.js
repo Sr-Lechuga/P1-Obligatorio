@@ -193,7 +193,7 @@ class Sistema {
             for (let i = 0; i < this.censos.length; i++) {
                 if (this.censos[i].cedula === cedulaFormateada) {
                     this.censos.splice(i,1);
-                    return;
+                    return '';
                 }
             }
         }else{

@@ -1,9 +1,8 @@
 const mi_sistema = new Sistema();
-// mi_sistema.censita_logueado = ['censista','sparedes'];
-mi_sistema.censita_logueado = null;
+// mi_sistema.censita_logueado = 'sparedes';
+mi_sistema.censita_logueado = 'invitado';
 
-
-
+/* ********************************************* Auxiliares ********************************************************** */
 function cargarDepartamentos() {
     mi_sistema.departamentos.forEach(departamento => {
         if (departamento === 'default')
@@ -44,7 +43,6 @@ function invalidarFormulario() {
     document.querySelector("#i_edad").setAttribute('disabled',true);
     document.querySelector("#s_departamento").setAttribute('disabled',true);
     document.querySelector("#s_ocupacion").setAttribute('disabled',true);
-    document.querySelector("#btn_validar").setAttribute('disabled',true);
 }
 
 function borrarErrores() {
@@ -55,6 +53,7 @@ function borrarErrores() {
     document.querySelector("p.mensaje-error.ocupacion").innerHTML = '';
 }
 
+/* ******************************************* Principales ********************************************************** */
 function preIngresarDatos() {
     const cedula = document.querySelector("#i_cedula").value,
         nombre = document.querySelector("#i_nombre").value,
@@ -86,6 +85,22 @@ function preIngresarDatos() {
     }
 }
 
+function removerDatosPreIngresados() {
+    const cedula = document.querySelector("#i_cedula").value;
+    let mensajeError = mi_sistema.eliminarInformacionPreIngresada(cedula);
+
+    if (mensajeError.length === 0) {
+        document.querySelector("#p_mensaje_final").innerHTML = `Los datos para la c&eacute;dula <b>${cedula}</b> se borraron existosamente`;
+        document.querySelector("#p_mensaje_final").removeAttribute('hidden');
+        scroll(0,document.body.scrollHeight);
+    
+    }else{
+        document.querySelector("#p_mensaje_final").innerHTML = `${mensajeError}`;
+        document.querySelector("#p_mensaje_final").removeAttribute('hidden');
+        scroll(0,document.body.scrollHeight);
+    }
+}
+
 function validarDatos() {
     const cedula = document.querySelector("#i_cedula").value,
         nombre = document.querySelector("#i_nombre").value,
@@ -101,7 +116,6 @@ function validarDatos() {
     let mensajesError = mi_sistema.ingresarDatosCenso(cedula,nombre,apellido,edad,departamento,ocupacion);
 
     if (mensajesError.length === 0) {
-
         document.querySelector("#p_mensaje_final").innerHTML = "<b>Censado correctamente</b>";
         document.querySelector("#p_mensaje_final").removeAttribute('hidden');
         invalidarFormulario();
@@ -115,10 +129,6 @@ function validarDatos() {
     }
 }
 
-function removerDatosPreIngresados() {
-    alert('Eliminar');
-}
-
 /* ********************************** Validaciones cedula *************************************************** */
 function verificarCedula() {
     const i_cedula = document.querySelector("#i_cedula"),
@@ -127,77 +137,90 @@ function verificarCedula() {
 
     if (!mi_sistema.esCedulaValida(cedula)){
         document.querySelector(".mensaje-error.cedula").innerHTML = `La c&eacute;dula <b>${cedula}</b> ingresada no es correcta.`;
-    
+
     }else{
+        /* Activa formulario, desactiva cedula*/
         document.querySelector("main .contenedor-datos").classList.add('activa');
         document.querySelector("main .contenedor-validacion").classList.add('activa');
-        document.querySelector(".mensaje-error.cedula").innerHTML = '';
         i_cedula.setAttribute('disabled',true);
+
+        /*Borra mensaje error*/
+        document.querySelector(".mensaje-error.cedula").innerHTML = '';
+
         if (mi_sistema.recuperarEstadoCenso(cedula) === ''){
-            //Sin ingresar
-            if (mi_sistema.censita_logueado === null) {
-                /*Si es invitado (cesnista_logueado === null), pre-ingresa*/
-                document.querySelector("#btn_validar").value = "Pre-ingresar datos";
-            }else{
-                /*Si es censista, censa*/
-                document.querySelector("#btn_validar").value = "Censar";
-            }
-        }else if (mi_sistema.recuperarEstadoCenso(cedula) === mi_sistema.PRE_INGRESADO){
-            mostrarDatos(cedula);
-            let indice = mi_sistema.recuperarIndiceCenso(cedula);
-
-            if (indice === -1){
-                alert("No existe el censo");
-                return;
-            }
-
-            document.querySelector("#i_nombre").value = mi_sistema.censos[indice].nombre;
-            document.querySelector("#i_apellido").value = mi_sistema.censos[indice].apellido;
-            document.querySelector("#i_edad").value = mi_sistema.censos[indice].edad;
-            document.querySelector("#s_departamento").value = mi_sistema.censos[indice].departamento;
-            document.querySelector("#s_ocupacion").value = mi_sistema.censos[indice].ocupacion;
             
-            if (mi_sistema.censita_logueado === null) {
-                /*Si es invitado (cesnista_logueado === null), elimna censo pre-ingresado */
-                invalidarFormulario();
-                document.querySelector("#btn_validar").value = "Eliminar";
-                document.querySelector("#btn_validar").removeAttribute('disabled');
-                document.querySelector("#btn_validar").removeEventListener("click",preIngresarDatos);
-                document.querySelector("#btn_validar").addEventListener("click",removerDatosPreIngresados);
+            if (mi_sistema.censita_logueado === 'invitado') {
+                /*Si es invitado, pre-ingresa*/
+                document.querySelector("#btn_preingresar").style.display = 'inline-block';
+                document.querySelector('#btn_eliminar').style.display = 'none';
+                document.querySelector('#btn_validar').style.display = 'none';
+            
             }else{
                 /*Si es censista, censa*/
-                document.querySelector("#btn_validar").value = "Censar";
+                document.querySelector("#btn_preingresar").style.display = 'none';
+                document.querySelector('#btn_eliminar').style.display = 'none';
+                document.querySelector('#btn_validar').style.display = 'inline-block';
+                document.querySelector('#btn_validar').value = 'Censar';
+            }
+
+        }else if (mi_sistema.recuperarEstadoCenso(cedula) === mi_sistema.PRE_INGRESADO){
+            
+            mostrarDatos(cedula);
+            
+            if (mi_sistema.censita_logueado === 'invitado') {
+            /*Si es invitado, elimina censo pre-ingresado */
+                /*Invalida formulario para que no se cambien los datos, solo se pueden eliminar*/
+                invalidarFormulario();
+
+                /*Habilita boton de eliminar informacion*/
+                document.querySelector("#btn_preingresar").style.display = 'none';
+                document.querySelector('#btn_eliminar').style.display = 'inline-block';
+                document.querySelector('#btn_validar').style.display = 'none';
+            
+            }else{
+            /*Si es censista, censa*/
+                document.querySelector("#btn_preingresar").style.display = 'none';
+                document.querySelector('#btn_eliminar').style.display = 'none';
+                document.querySelector('#btn_validar').style.display = 'inline-block';
             }
 
         }else{
+            
+            /* Muestra mensaje de error */
             document.querySelector(".mensaje-error.cedula").innerHTML = `La c&eacute;dula ingresada <b>${cedula}</b> ya fue censada. Puede ver los datos ingresados debajo.`;
+            
+            /*Muestra datos y no permite acciones*/
             mostrarDatos(cedula);
             invalidarFormulario();
+            
+            /*No muestra botones para acciones*/
+            document.querySelector("#btn_preingresar").style.display = 'none';
+            document.querySelector('#btn_eliminar').style.display = 'none';
+            document.querySelector('#btn_validar').style.display = 'none';
         }
     }
 }
 
 function gestionDeEventos() {
-
-    /* Estilo general del sistema */
-    if (mi_sistema.censita_logueado !== null && mi_sistema.censita_logueado[0] === 'censista') {
-        document.body.classList.add('censista');
-    }else{
-        document.body.classList.remove('censista');
-    }
-
+    
+    /*Carga selectores*/
     cargarDepartamentos();
     cargarOcupacion();
 
+    /* Evento para verificar la cedula al cambiar el valor del input*/
     document.querySelector("#i_cedula").addEventListener("change",verificarCedula);
-    if (mi_sistema.censita_logueado === null) {
-        document.querySelector("#btn_validar").addEventListener("click",preIngresarDatos);
-    
-    }else{
-        document.querySelector("#btn_validar").addEventListener("click",validarDatos);
-    }
 
-    console.log(mi_sistema.TOT)
+    /* Acciones con los censos para cada boton*/
+    document.querySelector("#btn_validar").addEventListener("click",validarDatos);
+    document.querySelector("#btn_eliminar").addEventListener("click",removerDatosPreIngresados);
+    document.querySelector("#btn_preingresar").addEventListener("click",preIngresarDatos);
+
+    /* Estilo general del sistema */
+    if (mi_sistema.censita_logueado !== 'invitado') {
+        document.body.classList.add('censista');    
+    }else{
+        document.body.classList.remove('censista');
+    }
 }
 
 window.addEventListener("load",gestionDeEventos);

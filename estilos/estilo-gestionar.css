@@ -199,7 +199,7 @@ main {
             margin-bottom: 2%;
         }
 
-        .area #btn_validar{
+        .area.contenedor-validacion input{
             width: 90%;
             justify-self: center;
             align-self: center;
@@ -211,7 +211,7 @@ main {
             box-shadow: var(--shadow-elevation-medium);
         }
 
-            #btn_validar:not(:disabled):hover{
+            .area.contenedor-validacion input:not(:disabled):hover{
                     box-shadow: inset 0 0 7px #aaa,
                                 inset 0 0 3px #ccc,
                                 inset 0 0 1px #fff;
