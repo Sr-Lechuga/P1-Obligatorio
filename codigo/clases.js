@@ -69,7 +69,9 @@ class Sistema {
         this.preIngresarDatosCenso('6.212.527-4','Patricio','Estrella',24,'montevideo','no trabaja');
         this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',23,'montevideo','dependiente');
         this.ingresarDatosCenso('1.555.094-5','Don','Cangrejo',42,'montevideo','independiente');
+        this.censos[2].censista_asignado = 'sparedes';
         this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'montevideo','estudiante');
+        this.censos[3].censista_asignado = 'sparedes';
     }
 
     /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/
@@ -303,6 +305,12 @@ class Sistema {
         }
     }
     
+    /* Asignar un censista al censo si no fue pre-asignado */
+    asignarCensista(cedula,usuario){
+        let indice = this.recuperarIndiceCenso(cedula);
+        this.censos[indice].censista_asignado = usuario; 
+    }
+
     /* Devuelve true si el usuario no esta registrado en la base de datos. Sera indiferente el uso de mayusculas*/
     esUsuarioValido(usuario){
         let valido = true,
@@ -442,6 +450,7 @@ class Censo {
         /*Campos con valores default*/
         this.censista_asignado = '';
         this.estado = '';
+        this.ultima_modificacion = new Date().toUTCString();
     }
 
     /* Recibe un string con el nombre y devuelve true si el nombre no es vacio. En caso contrario false */
@@ -457,6 +466,10 @@ class Censo {
     /* Recibe un entero, y devuelve true si este esta entre MIN_EDAD y MAX_EDAD inclusive. En caso contrario devuelve false */
     esEdadValida(edad){
         return MIN_EDAD <= edad && edad <= MAX_EDAD;
+    }
+
+    actualizarUltimaModificacion(){
+        this.ultima_modificacion = new Date().toUTCString();
     }
 }
 

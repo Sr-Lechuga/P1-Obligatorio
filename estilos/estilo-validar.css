@@ -185,7 +185,7 @@ main.activa {
 
 
 /* **************************** Tabla *************************************** */
-    .tabla-estadisticas{
+    .tabla-pendientes{
         border-collapse: collapse;
         margin: 25px 0;
         font-size: 0.9em;
@@ -195,14 +195,14 @@ main.activa {
         box-shadow: var(--shadow-elevation-medium);
     }
 
-    .tabla-estadisticas thead tr{
+    .tabla-pendientes thead tr{
         background: var(--gradient);
         color: var(--text-color-light);
         font-weight: 600;
         cursor: default;
     }
 
-    .tabla-estadisticas tbody tr{
+    .tabla-pendientes tbody tr{
         height: auto;
         border-bottom: 1px solid var(--text-color-light);
         cursor: pointer;
@@ -211,24 +211,24 @@ main.activa {
         transition: all .1s;
     }
 
-        .tabla-estadisticas tbody tr:nth-of-type(even){
+        .tabla-pendientes tbody tr:nth-of-type(even){
             background-color: var(--colored-shadow);
         }
 
-        .tabla-estadisticas tbody tr:last-of-type{
+        .tabla-pendientes tbody tr:last-of-type{
             border-bottom: 3px solid var(--main-color);
         }
 
-    .tabla-estadisticas tbody td:first-of-type{
+    .tabla-pendientes tbody td:first-of-type{
         font-weight: 500;
     }
 
-    .tabla-estadisticas tbody tr.activa{
+    .tabla-pendientes tbody tr.activa{
         font-weight: 600;
         color: var(--main-color);
     }
 
-    .tabla-estadisticas tbody tr.hidden{
+    .tabla-pendientes tbody tr.hidden{
         position: absolute;
         pointer-events: none;
         height: 0;
@@ -236,10 +236,11 @@ main.activa {
     }
 
 
-        .tabla-estadisticas th,
-        .tabla-estadisticas td{
+        .tabla-pendientes th,
+        .tabla-pendientes td{
             text-align: center;
             padding: 12px 15px;
+            text-transform: capitalize;
         }
 
 /* **************************** Datos ******************************** */

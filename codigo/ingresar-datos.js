@@ -116,6 +116,10 @@ function censarDatos() {
     let mensajesError = mi_sistema.ingresarDatosCenso(cedula,nombre,apellido,edad,departamento,ocupacion);
 
     if (mensajesError.length === 0) {
+        
+        /* Si todo salio correctamente se le asigna quien lo censo*/
+        mi_sistema.asignarCensista(cedula,mi_sistema.recuperarCensistaLogueado());
+
         document.querySelector("#p_mensaje_final").innerHTML = "<b>Censado correctamente</b>";
         document.querySelector("#p_mensaje_final").removeAttribute('hidden');
         invalidarFormulario();
