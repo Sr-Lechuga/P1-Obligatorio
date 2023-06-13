@@ -101,7 +101,7 @@ function removerDatosPreIngresados() {
     }
 }
 
-function validarDatos() {
+function censarDatos() {
     const cedula = document.querySelector("#i_cedula").value,
         nombre = document.querySelector("#i_nombre").value,
         apellido = document.querySelector("#i_apellido").value,
@@ -149,25 +149,24 @@ function verificarCedula() {
 
         if (mi_sistema.recuperarEstadoCenso(cedula) === ''){
             
-            if (mi_sistema.censita_logueado === 'invitado') {
+            if (mi_sistema.recuperarCensistaLogueado === 'invitado') {
                 /*Si es invitado, pre-ingresa*/
                 document.querySelector("#btn_preingresar").style.display = 'inline-block';
                 document.querySelector('#btn_eliminar').style.display = 'none';
-                document.querySelector('#btn_validar').style.display = 'none';
+                document.querySelector('#btn_censar').style.display = 'none';
             
             }else{
                 /*Si es censista, censa*/
                 document.querySelector("#btn_preingresar").style.display = 'none';
                 document.querySelector('#btn_eliminar').style.display = 'none';
-                document.querySelector('#btn_validar').style.display = 'inline-block';
-                document.querySelector('#btn_validar').value = 'Censar';
+                document.querySelector('#btn_censar').style.display = 'inline-block';
             }
 
         }else if (mi_sistema.recuperarEstadoCenso(cedula) === mi_sistema.PRE_INGRESADO){
             
             mostrarDatos(cedula);
             
-            if (mi_sistema.censita_logueado === 'invitado') {
+            if (mi_sistema.recuperarCensistaLogueado === 'invitado') {
             /*Si es invitado, elimina censo pre-ingresado */
                 /*Invalida formulario para que no se cambien los datos, solo se pueden eliminar*/
                 invalidarFormulario();
@@ -175,13 +174,16 @@ function verificarCedula() {
                 /*Habilita boton de eliminar informacion*/
                 document.querySelector("#btn_preingresar").style.display = 'none';
                 document.querySelector('#btn_eliminar').style.display = 'inline-block';
-                document.querySelector('#btn_validar').style.display = 'none';
+                document.querySelector('#btn_censar').style.display = 'none';
             
             }else{
             /*Si es censista, censa*/
+                /*Invalida formulario para que no se cambien los datos, debe chequear sus pre-ingresados*/
+                invalidarFormulario();
+
                 document.querySelector("#btn_preingresar").style.display = 'none';
                 document.querySelector('#btn_eliminar').style.display = 'none';
-                document.querySelector('#btn_validar').style.display = 'inline-block';
+                document.querySelector('#btn_censar').style.display = 'none';
             }
 
         }else{
@@ -196,7 +198,7 @@ function verificarCedula() {
             /*No muestra botones para acciones*/
             document.querySelector("#btn_preingresar").style.display = 'none';
             document.querySelector('#btn_eliminar').style.display = 'none';
-            document.querySelector('#btn_validar').style.display = 'none';
+            document.querySelector('#btn_censar').style.display = 'none';
         }
     }
 }
@@ -211,12 +213,12 @@ function gestionDeEventos() {
     document.querySelector("#i_cedula").addEventListener("change",verificarCedula);
 
     /* Acciones con los censos para cada boton*/
-    document.querySelector("#btn_validar").addEventListener("click",validarDatos);
+    document.querySelector("#btn_censar").addEventListener("click",censarDatos);
     document.querySelector("#btn_eliminar").addEventListener("click",removerDatosPreIngresados);
     document.querySelector("#btn_preingresar").addEventListener("click",preIngresarDatos);
 
     /* Estilo general del sistema */
-    if (mi_sistema.censita_logueado !== 'invitado') {
+    if (mi_sistema.recuperarCensistaLogueado !== 'invitado') {
         document.body.classList.add('censista');    
     }else{
         document.body.classList.remove('censista');
