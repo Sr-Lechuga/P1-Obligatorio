@@ -7,7 +7,7 @@ const mainContainer = document.querySelector("main");
 const tablaPendientes = document.querySelector("main .tabla-pendientes");
 
 /* Cosntantes y variables globales*/
-
+    let editado = false;
 /* Funciones */
 
 /*Cargar los valores de los departamentos*/
@@ -31,8 +31,26 @@ function cargarOcupacion() {
     });
 }
 
+/* Habilita la edicion de los campos del fomulario*/
+function habilitarEdicion() {
+    document.querySelector('#i_nombre').removeAttribute('disabled');
+    document.querySelector('#i_apellido').removeAttribute('disabled');
+    document.querySelector('#i_edad').removeAttribute('disabled');
+    document.querySelector('#s_departamento').removeAttribute('disabled');
+    document.querySelector('#s_ocupacion').removeAttribute('disabled');
+    editado = true;
+}
+
+function deshabilitarEdicion() {
+    document.querySelector('#i_nombre').setAttribute('disabled',true);
+    document.querySelector('#i_apellido').setAttribute('disabled',true);
+    document.querySelector('#i_edad').setAttribute('disabled',true);
+    document.querySelector('#s_departamento').setAttribute('disabled',true);
+    document.querySelector('#s_ocupacion').setAttribute('disabled',true);
+}
+
 /* Carga la tabla con todos los usuarios asignados para validar del censista logueado */
-function preCargarTabla(usuario) {
+function cargarTabla(usuario) {
     tablaPendientes.innerHTML = 
     `<thead> 
         <tr>
@@ -68,8 +86,11 @@ function buscarCenso() {
     const cedula = document.querySelector("#i_cedula").value;
 
     if (!mi_sistema.esCedulaValida(cedula)){
-        alert("No es una cedula valida");
-        return;
+        return -2;
+    }
+
+    if (mi_sistema.recuperarEstadoCenso(cedula) === mi_sistema.CENSADO) {
+        return -3;
     }
 
     return mi_sistema.recuperarIndiceCenso(cedula);
@@ -79,9 +100,14 @@ function buscarCenso() {
 function cargarDatos() {
     let indiceCenso = buscarCenso();
 
-    if (indiceCenso === -1) {
-        alert('No hay un censo asociado a esa cedula')
-    
+    if (indiceCenso < 0) {
+        if (indiceCenso === -1)
+            alert('No hay un censo asociado a esa cedula');
+        else if (indiceCenso === -2)
+            alert("No es una cedula valida");
+        else
+            alert('La cedula ya fue censada');
+
     }else{
         document.querySelector(".seccion-datos").classList.add('activa');
         
@@ -95,15 +121,62 @@ function cargarDatos() {
     }
 }
 
+function validarDatos() {
+    let cedula = document.querySelector('#i_cedula').value;
+
+    if (editado) {
+        let nombre =document.querySelector('#i_nombre').value,
+            apellido =document.querySelector('#i_apellido').value,
+            edad =document.querySelector('#i_edad').value,
+            departamento =document.querySelector('#s_departamento').value,
+            ocupacion =document.querySelector('#s_ocupacion').value;
+
+        mi_sistema.eliminarInformacionPreIngresada(cedula);
+
+        let mensajesError = mi_sistema.ingresarDatosCenso(cedula,nombre,apellido,edad,departamento,ocupacion);
+
+        if (mensajesError.length === 0) {
+            alert('Se validaron los datos');
+            deshabilitarEdicion();
+            document.querySelector(".seccion-datos").classList.remove('activa');
+            editado = false;
+            cargarTabla();
+            document.querySelector('#i_cedula').value = '';
+            document.querySelector('#i_cedula').removeAttribute('disabled');
+
+        }else{
+            mensajesError.forEach (error =>{
+                alert(error);
+            });
+        }
+    }else{
+        let error = mi_sistema.validarPreIngresado(cedula);
+        
+        if (error !== undefined) {
+            alert(error);
+        
+        }else{
+            alert('Se validaron los datos');
+            deshabilitarEdicion();
+            document.querySelector(".seccion-datos").classList.remove('activa');
+            editado = false;
+            cargarTabla();
+            document.querySelector('#i_cedula').value = '';
+            document.querySelector('#i_cedula').removeAttribute('disabled');
+        }
+    }
+}
 
 window.addEventListener("load",() =>{
     /* Mostrar tabla */
     mainContainer.classList.add("activa");
 
-    preCargarTabla();
+    cargarTabla();
 
     cargarDepartamentos();
     cargarOcupacion();
 
     document.querySelector("#btn_buscar").addEventListener('click',cargarDatos);
+    document.querySelector("#btn_validar").addEventListener('click',validarDatos);
+    document.querySelector("#btn_editar").addEventListener('click',habilitarEdicion);
 });

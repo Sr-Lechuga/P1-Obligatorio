@@ -387,8 +387,12 @@ class Sistema {
             estado = this.recuperarEstadoCenso(cedulaFormateada);
 
         if(estado !== PRE_INGRESADO){
-            return "No se pude validar a un censo que no esta pre-ingresado, el censo esta:" + 
-            estado === 2 ? "Censado" : "Aun sin ingresar al sistema";
+            if (estado === CENSADO) {
+                return "No se pude validar a un censo que no esta pre-ingresado, el censo esta: Censado";
+            
+            }else{
+                return "No se pude validar a un censo que no esta pre-ingresado, el censo esta: Sin ingresar al sistema";
+            }
         
         }else if (estado === PRE_INGRESADO) {
             this.censos.forEach(censo =>{

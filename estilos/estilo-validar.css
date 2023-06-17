@@ -138,6 +138,7 @@ main.activa {
     border: 3px solid var(--main-color);
     border-radius: 10px;
     box-shadow: var(--shadow-elevation-medium);
+    z-index: 100;
 }
 
     .seccion-validacion div{
@@ -313,7 +314,7 @@ main.activa {
             margin-bottom: 2%;
         }
 
-        .area #btn_validar{
+        .area.contenedor-validacion input{
             width: 90%;
             justify-self: center;
             align-self: center;
@@ -326,10 +327,10 @@ main.activa {
             transform: var(--tran-02);
         }
 
-            #btn_validar:hover{
+            .area.contenedor-validacion input:hover{
                     box-shadow:var(--button-ilumination-hover);
             }
 
-            #btn_validar:active{
+            .area.contenedor-validacion input:active{
                 transform: scale(95%);
             }
