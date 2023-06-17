@@ -303,6 +303,11 @@ main.activa {
                 caret-color: black;
             }
 
+            .area .seccion select{
+                text-transform: capitalize;
+            }
+
+
         .area.contenedor-validacion{
             margin-top: 5%;
             margin-bottom: 2%;

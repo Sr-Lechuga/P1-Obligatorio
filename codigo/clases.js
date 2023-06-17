@@ -1,6 +1,6 @@
 const MIN_EDAD = 0,
       MAX_EDAD = 130,
-      FORMATO_CEDULA = /[0-9]{1}\.[0-9]{3}\.[0-9]{3}\-[0-9]{1}/g,
+      FORMATO_CEDULA = /([0-9]{1}\.[0-9]{3}\.[0-9]{3}-[0-9]{1}|[0-9]{7}-[0-9]|[0-9]{8})/g,
       PRE_INGRESADO = '1', CENSADO = '2', //Estados de censo
       TOTAL_CENSOS = 3500000;
       CODIGO_VALIDACION = [2,9,8,7,6,3,4];
@@ -67,11 +67,11 @@ class Sistema {
     /* Carga los valores inciales para los censos registrados en el sistema*/
     cargaValoresInicialesCensos(){
         this.preIngresarDatosCenso('6.212.527-4','Patricio','Estrella',24,'montevideo','no trabaja');
+        this.censos[0].censista_asignado = 'sparedes';
         this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',23,'montevideo','dependiente');
+        this.censos[1].censista_asignado = 'sparedes';
         this.ingresarDatosCenso('1.555.094-5','Don','Cangrejo',42,'montevideo','independiente');
-        this.censos[2].censista_asignado = 'sparedes';
         this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'montevideo','estudiante');
-        this.censos[3].censista_asignado = 'sparedes';
     }
 
     /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/
@@ -406,7 +406,14 @@ class Sistema {
             return false;
 
         let cedulaFormateada = this.formatearCedula(cedula);
+
+        /*Si la cedula no tiene millones el 0 se considera como 0*/
+        if (cedulaFormateada.length === 7) {
+            cedulaFormateada.unshift('0');
+        }
+
         let digitoVerificador = 0;
+
         for (let i = 0; i < cedulaFormateada.length-1; i++) {
             digitoVerificador += cedulaFormateada[i] * CODIGO_VALIDACION[i]; 
         }
@@ -491,6 +498,7 @@ class Censista {
 
         return formato_correcto;
     }
+
     /* Devuelve true si el nombre ingresado esta vacio. En caso contrario devuelva false*/
     esNombreVacio(nombre){
         return nombre.length <= 0;
