@@ -201,6 +201,9 @@ window.addEventListener("load",() =>{
     /* Mostrar tabla */
     mainContainer.classList.add("activa");
 
+    /*Carga el menu de navegacion superior*/
+    mi_sistema.cargarNavegacion(document.querySelector('header'));
+
     cargarTabla();
 
     cargarDepartamentos();

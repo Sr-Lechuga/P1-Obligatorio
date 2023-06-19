@@ -139,6 +139,7 @@ function mostrarDetalleEdades() {
 }
 window.addEventListener("load",() =>{
     contenedorPrincipal.classList.add("activa");
+    mi_sistema.cargarNavegacion(document.querySelector('header'));
 
     cargaDepartamentos();
     establecerTotalCensados();

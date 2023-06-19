@@ -1,6 +1,6 @@
 const mi_sistema = new Sistema();
-// mi_sistema.censita_logueado = 'sparedes';
-mi_sistema.censita_logueado = 'invitado';
+mi_sistema.censita_logueado = 'sparedes';
+// mi_sistema.censita_logueado = 'invitado';
 
 /* ********************************************* Auxiliares ********************************************************** */
 function cargarDepartamentos() {
@@ -209,6 +209,9 @@ function verificarCedula() {
 
 function gestionDeEventos() {
     
+    /* Carga el menu de navegacion superior*/
+    mi_sistema.cargarNavegacion(document.querySelector('header'));
+
     /*Carga selectores*/
     cargarDepartamentos();
     cargarOcupacion();
@@ -222,10 +225,10 @@ function gestionDeEventos() {
     document.querySelector("#btn_preingresar").addEventListener("click",preIngresarDatos);
 
     /* Estilo general del sistema */
-    if (mi_sistema.recuperarCensistaLogueado !== 'invitado') {
-        document.body.classList.add('censista');    
-    }else{
+    if (mi_sistema.recuperarCensistaLogueado() === 'invitado') {
         document.body.classList.remove('censista');
+    }else{
+        document.body.classList.add('censista');    
     }
 }
 

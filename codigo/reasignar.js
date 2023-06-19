@@ -112,6 +112,10 @@ function reasignarCensista() {
 window.addEventListener("load",() =>{
     mainContainer.classList.add("activa");
 
+    /*Carga el menu de navegacion superior*/
+    mi_sistema.cargarNavegacion(document.querySelector('header'));
+
+
     cargarCensistas();
     cargarPersonas();
     cargarTabla();

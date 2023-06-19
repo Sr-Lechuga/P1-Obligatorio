@@ -77,6 +77,7 @@ function cargarTabla() {
 
 window.addEventListener("load",() =>{
     mainContainer.classList.add("activa");
-
+    mi_sistema.cargarNavegacion(document.querySelector('header'));
+    
     cargarTabla();
 });

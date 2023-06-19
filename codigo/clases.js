@@ -456,6 +456,30 @@ class Sistema {
         else
             return cedulaSinFormato.slice(0,1) + '.' + cedulaSinFormato.slice(1,4) + '.' + cedulaSinFormato.slice(4,7) + '-' + cedulaSinFormato.slice(7);
     }
+
+    cargarNavegacion(menuNavegacion){
+        if (this.censita_logueado === 'invitado') {
+            menuNavegacion.innerHTML = `
+            <a href="index.html" class="logo"><img src="img/logo_censo.svg" alt="logo"></a>
+            <nav class="navbar">
+                <a href="invitado-principal.html">Inicio</a>
+                <a href="gestionar-informacion.html">Ingresar informaci&oacute;n</a>
+                <a href="gestionar-informacion.html">Eliminar informaci&oacute;n</a>
+                <a href="estadistica-simple.html">Estad&iacute;sticas</a>
+            </nav>`;
+        
+        }else{
+            menuNavegacion.innerHTML = 
+            `<a href="index.html" class="logo"><img src="img/logo_censo.svg" alt="logo"></a>
+            <nav class="navbar">
+                <a href="censista-principal.html">Inicio</a>
+                <a href="gestionar-informacion.html">Ingresar informaci&oacute;n</a>
+                <a href="validar-datos.html">Consultar informaci&oacute;n</a>
+                <a href="reasignar.html">Reasignar censista</a>
+                <a href="estadisticas-completas.html">Estad&iacute;sticas</a>
+            </nav>`
+        }
+    }
 }
 
 class Censo {
