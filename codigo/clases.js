@@ -71,7 +71,7 @@ class Sistema {
         this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',23,'montevideo','dependiente');
         this.censos[1].censista_asignado = 'sparedes';
         this.ingresarDatosCenso('1.555.094-5','Don','Cangrejo',42,'montevideo','independiente');
-        this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'montevideo','estudiante');
+        this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'canelones','estudiante');
     }
 
     /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/

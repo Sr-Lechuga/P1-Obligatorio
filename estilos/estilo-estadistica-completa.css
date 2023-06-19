@@ -415,6 +415,7 @@ main {
         .tabla-estadisticas td{
             text-align: center;
             padding: 12px 15px;
+            text-transform: capitalize;
         }
 
 /* *********************************** Selector  departamento ******************************* */
