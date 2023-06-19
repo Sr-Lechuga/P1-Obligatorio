@@ -434,6 +434,7 @@ class Sistema {
             if (this.censos[i].cedula === cedulaFormateada) 
                 return i;
         }
+        
         return -1;
     }
 

@@ -26,6 +26,7 @@
             <div class="container-selector-persona">
                 <label for="s_persona">Busque la c&eacute;dula de la persona:</label>
                 <input type="text" id="i_cedula" placeholder="Ingrese la c&eacute;dula...">
+                <p class="mensaje-error cedula"></p>
             </div>
             <input type="button" value="Confirmar" id="btn_buscar">
         </div>
@@ -38,22 +39,27 @@
                 <div class="seccion nombre-apellido">
                     <label for="i_nombre">Nombre*:</label>
                     <input type="text" id="i_nombre" placeholder="Ingrese su nombre..." maxlength="70" required disabled>
+                    <p class="mensaje-error nombre"></p>
                     <label for="i_apellido">Apellido*:</label>
                     <input type="text" id="i_apellido" placeholder="Ingrese su apellido..." maxlength="70" required disabled>
+                    <p class="mensaje-error apellido"></p>
                 </div>
                 <div class="seccion edad">
                     <label for="i_edad">Edad*:</label>
                     <input type="number" id="i_edad" placeholder="Ingrese su edad..." min="0" max="130" required disabled>
+                    <p class="mensaje-error edad"></p>
                 </div>
                 <div class="seccion locacion">
                     <label for="s_departamento">Departamento*:</label>
                     <select name="departamento" id="s_departamento" required disabled>
                     </select>
+                    <p class="mensaje-error departamento"></p>
                 </div>
                 <div class="seccion ocupacion">
                     <label for="s_ocupacion">Ocupacion*:</label>
                     <select name="ocupacion" id="s_ocupacion" required disabled>
                     </select>
+                    <p class="mensaje-error ocupacion"></p>
                 </div>
             </div>
             <div class="area contenedor-validacion">

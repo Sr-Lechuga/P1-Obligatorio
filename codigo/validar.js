@@ -31,6 +31,17 @@ function cargarOcupacion() {
     });
 }
 
+function borrarMensajeError(contenedor,inputGenerador) {
+    contenedor.innerHTML = '';
+    inputGenerador.style.border = '';
+}
+
+function mostrarMensajeError(contenedor,mensaje,inputGenerador) {
+
+    contenedor.innerHTML = mensaje;
+    inputGenerador.style.border = "3px solid rgb(198, 3, 3)";
+}
+
 /* Habilita la edicion de los campos del fomulario*/
 function habilitarEdicion() {
     document.querySelector('#i_nombre').removeAttribute('disabled');
@@ -50,7 +61,7 @@ function deshabilitarEdicion() {
 }
 
 /* Carga la tabla con todos los usuarios asignados para validar del censista logueado */
-function cargarTabla(usuario) {
+function cargarTabla() {
     tablaPendientes.innerHTML = 
     `<thead> 
         <tr>
@@ -66,10 +77,19 @@ function cargarTabla(usuario) {
     tablaPendientes.innerHTML += `<tbody>`; 
     mi_sistema.censos.forEach(censo =>{
         if (censo.censista_asignado === mi_sistema.recuperarCensistaLogueado() && censo.estado === mi_sistema.PRE_INGRESADO) {
+            let cedula_con_formato = '',
+                cedula = censo.cedula;
 
+            if (cedula.length === 7) {
+                cedula_con_formato = cedula.slice(0,3) + '.' + cedula.slice(3,6) + '-' + cedula.slice(6);
+            }else{
+                cedula_con_formato = cedula.slice(0,1) + '.' + cedula.slice(1,4) + '.' + cedula.slice(4,7) + '-' + cedula.slice(7);
+            }
+
+            
             tablaPendientes.querySelector("tbody").innerHTML += 
             `<tr>
-                <td>${censo.cedula}</td>
+                <td>${cedula_con_formato}</td>
                 <td>${censo.nombre}</td>
                 <td>${censo.apellido}</td>
                 <td>Esperando Verificaci&oacute;n</td>
@@ -99,14 +119,15 @@ function buscarCenso() {
 /* Si el censo existe en la bases de datos carga los valores del mismo en el formulario */
 function cargarDatos() {
     let indiceCenso = buscarCenso();
+    borrarMensajeError(document.querySelector('p.mensaje-error.cedula'),document.querySelector('#i_cedula'));
 
     if (indiceCenso < 0) {
         if (indiceCenso === -1)
-            alert('No hay un censo asociado a esa cedula');
+            mostrarMensajeError(document.querySelector('p.mensaje-error.cedula'),'No hay un censo asociado a esa cedula',document.querySelector('#i_cedula'));
         else if (indiceCenso === -2)
-            alert("No es una cedula valida");
+            mostrarMensajeError(document.querySelector('p.mensaje-error.cedula'),'No es una cedula valida',document.querySelector('#i_cedula'));
         else
-            alert('La cedula ya fue censada');
+            mostrarMensajeError(document.querySelector('p.mensaje-error.cedula'),'La cedula ya fue censada',document.querySelector('#i_cedula'));
 
     }else{
         document.querySelector(".seccion-datos").classList.add('activa');
@@ -122,6 +143,13 @@ function cargarDatos() {
 }
 
 function validarDatos() {
+    
+    borrarMensajeError(document.querySelector('p.mensaje-error.nombre'),document.querySelector('#i_nombre'));
+    borrarMensajeError(document.querySelector('p.mensaje-error.apellido'),document.querySelector('#i_apellido'));
+    borrarMensajeError(document.querySelector('p.mensaje-error.edad'),document.querySelector('#i_edad'));
+    borrarMensajeError(document.querySelector('p.mensaje-error.departamento'),document.querySelector('#s_departamento'));
+    borrarMensajeError(document.querySelector('p.mensaje-error.ocupacion'),document.querySelector('#s_ocupacion'));
+    
     let cedula = document.querySelector('#i_cedula').value;
 
     if (editado) {
@@ -146,14 +174,23 @@ function validarDatos() {
 
         }else{
             mensajesError.forEach (error =>{
-                alert(error);
+                if (error.tipo === 'nombre' ) 
+                    mostrarMensajeError(document.querySelector('p.mensaje-error.nombre'),error.mensaje,document.querySelector('#i_nombre'));
+                else if (error.tipo === 'apellido' ) 
+                    mostrarMensajeError(document.querySelector('p.mensaje-error.apellido'),error.mensaje,document.querySelector('#i_apellido'));
+                else if (error.tipo === 'edad' ) 
+                    mostrarMensajeError(document.querySelector('p.mensaje-error.edad'),error.mensaje,document.querySelector('#i_edad'));
+                else if (error.tipo === 'departamento' ) 
+                    mostrarMensajeError(document.querySelector('p.mensaje-error.departamento'),error.mensaje,document.querySelector('#s_departamento'));
+                else if (error.tipo === 'ocupacion' ) 
+                    mostrarMensajeError(document.querySelector('p.mensaje-error.ocupacion'),error.mensaje,document.querySelector('#s_ocupacion'));
             });
         }
-    }else{
+    }else{ //No fue editado nada
         let error = mi_sistema.validarPreIngresado(cedula);
         
         if (error !== undefined) {
-            alert(error);
+            mostrarMensajeError(document.querySelector('p.mensaje-error.cedula'),error,document.querySelector('#i_cedula'));
         
         }else{
             alert('Se validaron los datos');
