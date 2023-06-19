@@ -66,11 +66,12 @@ class Sistema {
 
     /* Carga los valores inciales para los censos registrados en el sistema*/
     cargaValoresInicialesCensos(){
-        this.preIngresarDatosCenso('6.212.527-4','Patricio','Estrella',24,'montevideo','no trabaja');
+        this.preIngresarDatosCenso('6.212.527-4','Patricio','Estrella',16,'montevideo','no trabaja');
         this.censos[0].censista_asignado = 'sparedes';
-        this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',23,'montevideo','dependiente');
+        this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',17,'montevideo','dependiente');
         this.censos[1].censista_asignado = 'sparedes';
         this.ingresarDatosCenso('1.555.094-5','Don','Cangrejo',42,'montevideo','independiente');
+        this.ingresarDatosCenso('4.646.319-7','Sr','Lechuga',17,'montevideo','independiente');
         this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'canelones','estudiante');
     }
 
