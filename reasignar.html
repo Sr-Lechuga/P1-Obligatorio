@@ -23,61 +23,28 @@
     </header>
     <main class="contenedor-reasignacion">
         <div class="seccion-reasignacion">
-            <div class="container-selector-censista">
-                <label for="s_censistas">Censista:</label>
-                <select name="censistas" id="s_censistas" required>
-                    <option value="default">Seleccione...</option>
-                </select>
-            </div>
             <div class="container-selector-persona">
                 <label for="s_persona">Persona:</label>
                 <select name="persona" id="s_persona" required>
-                    <option value="default">Seleccione...</option>
+                </select>
+            </div>
+            <div class="container-selector-censista">
+                <label for="s_censistas">Censista:</label>
+                <select name="censistas" id="s_censistas" required>
+                    
                 </select>
             </div>
             <input type="button" value="Confirmar" id="btn_reasignar">
         </div>
         <div class="seccion-tabla">
-            <table class="tabla-estadisticas">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Estado</th>
-                        <th>Departamento</th>
-                        <th>C&eacute;dula</th>
-                        <th>Ultima modificacion</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Armando</td>
-                        <td>Paredes</td>
-                        <td>Esperando Verificacion</td>
-                        <td>Montevideo</td>
-                        <td>1.111.111-1</td>
-                        <td>19/05/2023 02:34 PM</td>
-                    </tr>
-                    <tr>
-                        <td>Elsa</td>
-                        <td>Pato</td>
-                        <td>Esperando Verificacion</td>
-                        <td>Montevideo</td>
-                        <td>2.222.222-2</td>
-                        <td>14/05/2023 01:34 AM</td>
-                    </tr>
-                    <tr>
-                        <td>Susana</td>
-                        <td>Oria</td>
-                        <td>Esperando Verificacion</td>
-                        <td>Canelones</td>
-                        <td>3.333.333-3</td>
-                        <td>01/05/2023 09:34 PM</td>
-                    </tr>
-                </tbody>
+            <table class="tabla-pendientes">
             </table>
         </div>
+        <div class="seccion-mensaje">
+            <p class="mensaje"></p>
+        </div>
     </main>
+    <script src="codigo/clases.js"></script>
     <script src="codigo/reasignar.js"></script>
 </body>
 </html>

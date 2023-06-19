@@ -75,7 +75,7 @@ class Sistema {
     }
 
     /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/
-    formatearCedula(cedula){
+    quitarFormatoCedula(cedula){
         let cedulaFormateada = '';
         for (let i = 0; i < cedula.length; i++) {
             if (cedula[i].match(/[0-9]/) !== null) {
@@ -104,7 +104,7 @@ class Sistema {
         let encontrado = false,
             i = 0,
             estado = '',
-            cedulaFormateada = this.formatearCedula(cedula);
+            cedulaFormateada = this.quitarFormatoCedula(cedula);
         
         while (!encontrado && i < this.censos.length) {
 
@@ -185,7 +185,7 @@ class Sistema {
         Elimina la informacion pre-ingresada por un usuario.
     */
     eliminarInformacionPreIngresada(cedula){
-        let cedulaFormateada = this.formatearCedula(cedula),
+        let cedulaFormateada = this.quitarFormatoCedula(cedula),
             estado = this.recuperarEstadoCenso(cedulaFormateada);
 
         if (estado === CENSADO) {
@@ -205,7 +205,7 @@ class Sistema {
 
     /* Devuelve true, si la cedula no tiene ningun censo registrado en la base de datos*/
     esCensoUnico(cedula){
-        let cedulaFormateada = this.formatearCedula(cedula);
+        let cedulaFormateada = this.quitarFormatoCedula(cedula);
 
         for (let i = 0; i < this.censos.length; i++) {
             if (this.censos[i].cedula === parseInt(cedulaFormateada)) {
@@ -229,7 +229,7 @@ class Sistema {
         else if(!this.esCensoUnico(cedula))
             mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."});
         
-        let cedulaFormateada = this.formatearCedula(cedula);
+        let cedulaFormateada = this.quitarFormatoCedula(cedula);
         preIngreso.cedula = cedulaFormateada;
 
         if(!preIngreso.esNombreValido(nombre))
@@ -274,7 +274,7 @@ class Sistema {
         else if(!this.esCensoUnico(cedula))
             mensajesError.push({tipo:'cedula', mensaje:"La cédula ingresada ya fue censada. Puede ver los datos ingresados debajo."});
         
-        let cedulaFormateada = this.formatearCedula(cedula);
+        let cedulaFormateada = this.quitarFormatoCedula(cedula);
         preIngreso.cedula = cedulaFormateada;
 
         if(!preIngreso.esNombreValido(nombre))
@@ -362,7 +362,7 @@ class Sistema {
         if (usuario_censista === this.censita_logueado)
             return "No se puede reasignar al mismo censista logueado.";
         
-        let cedulaFormateada = this.formatearCedula(cedula),
+        let cedulaFormateada = this.quitarFormatoCedula(cedula),
             estado = this.recuperarEstadoCenso(cedulaFormateada);
 
         if(estado !== PRE_INGRESADO){
@@ -383,7 +383,7 @@ class Sistema {
         En caso de error devuelve un mensaje definiendo el problema
     */
     validarPreIngresado(cedula){
-        let cedulaFormateada = this.formatearCedula(cedula),
+        let cedulaFormateada = this.quitarFormatoCedula(cedula),
             estado = this.recuperarEstadoCenso(cedulaFormateada);
 
         if(estado !== PRE_INGRESADO){
@@ -409,7 +409,7 @@ class Sistema {
         if (cedula.match(FORMATO_CEDULA) === null)
             return false;
 
-        let cedulaFormateada = this.formatearCedula(cedula);
+        let cedulaFormateada = this.quitarFormatoCedula(cedula);
 
         /*Si la cedula no tiene millones el 0 se considera como 0*/
         if (cedulaFormateada.length === 7) {
@@ -428,7 +428,7 @@ class Sistema {
 
     /*Recupera el indice del censo deseado con el numero de cedula requerido*/
     recuperarIndiceCenso(cedula){
-        let cedulaFormateada = this.formatearCedula(cedula);
+        let cedulaFormateada = this.quitarFormatoCedula(cedula);
 
         for (let i = 0; i < this.censos.length; i++) {
             if (this.censos[i].cedula === cedulaFormateada) 
@@ -447,6 +447,13 @@ class Sistema {
         }
 
         return '';
+    }
+
+    formatearCedula(cedulaSinFormato){
+        if (cedulaSinFormato.length === 7)
+            return cedulaSinFormato.slice(0,3) + '.' + cedulaSinFormato.slice(3,6) + '-' + cedulaSinFormato.slice(6);
+        else
+            return cedulaSinFormato.slice(0,1) + '.' + cedulaSinFormato.slice(1,4) + '.' + cedulaSinFormato.slice(4,7) + '-' + cedulaSinFormato.slice(7);
     }
 }
 

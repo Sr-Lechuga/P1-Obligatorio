@@ -77,14 +77,7 @@ function cargarTabla() {
     tablaPendientes.innerHTML += `<tbody>`; 
     mi_sistema.censos.forEach(censo =>{
         if (censo.censista_asignado === mi_sistema.recuperarCensistaLogueado() && censo.estado === mi_sistema.PRE_INGRESADO) {
-            let cedula_con_formato = '',
-                cedula = censo.cedula;
-
-            if (cedula.length === 7) {
-                cedula_con_formato = cedula.slice(0,3) + '.' + cedula.slice(3,6) + '-' + cedula.slice(6);
-            }else{
-                cedula_con_formato = cedula.slice(0,1) + '.' + cedula.slice(1,4) + '.' + cedula.slice(4,7) + '-' + cedula.slice(7);
-            }
+            let cedula_con_formato = mi_sistema.formatearCedula(censo.cedula);
 
             
             tablaPendientes.querySelector("tbody").innerHTML += 
