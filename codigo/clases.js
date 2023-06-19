@@ -373,10 +373,10 @@ class Sistema {
             this.censos.forEach(censo =>{
                 if(censo.cedula === cedulaFormateada){
                     censo.censista_asignado = usuario_censista;
-                    return '';
                 }
             });
         }
+        return '';
     }
 
     /* Permite a un usuario con perfil de censista, validar la informacion pre ingresada por un invitado. 

@@ -74,7 +74,38 @@ function cargarPersonas() {
 
 
 function reasignarCensista() {
-    
+    const censista = document.querySelector("#s_censistas").value,
+          cedula = document.querySelector("#s_persona").value,
+          parrafoMensajeError = document.querySelector(".seccion-mensaje p.error"),
+          parrafoMensajeCorrecto = document.querySelector(".seccion-mensaje p.correcto");
+
+    /* Resetea los mensajes correctos y de error*/
+    parrafoMensajeCorrecto.textContent = '';
+    parrafoMensajeError.textContent = '';
+
+    /* Chequea errores de seleccion */
+    if (cedula === 'default') {
+        parrafoMensajeError.textContent = 'La cédula seleccionada no es válida.';
+        return;
+    }else if (censista === 'default'){
+        parrafoMensajeError.textContent = 'El usuario seleccionado no es válido.';
+        return;
+    }
+
+    /* Reasignacion de censista con cedula y usuario*/
+    let error = mi_sistema.reasignarCensista(cedula,censista);
+
+    /*Posibles errores de retorno*/
+    if (error === ''){
+        parrafoMensajeCorrecto.textContent = 'Se reasigno al censista correctamente';
+        /*Recarga los valores sin el reasignado */
+        cargarTabla();
+        cargarPersonas();
+        document.querySelector("#s_censistas").value = 'default';
+        document.querySelector("#s_persona").value = 'default';
+    }
+    else
+        parrafoMensajeError.textContent = error;
 }
 
 
@@ -84,4 +115,6 @@ window.addEventListener("load",() =>{
     cargarCensistas();
     cargarPersonas();
     cargarTabla();
+
+    document.querySelector("#btn_reasignar").addEventListener('click',reasignarCensista);
 });

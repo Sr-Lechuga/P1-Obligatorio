@@ -8,6 +8,8 @@
     --gradient: linear-gradient(270deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
     --gradient-vertical: linear-gradient(70deg, rgb(4, 19, 0) 0%, rgb(28,121,9) 38%, rgb(2, 90, 108) 100%);
     --text-ilumination: 0 0 10px rgba(255, 255, 255, 0.4);
+    --color-error: rgb(198, 3, 3);
+    --color-correcto: rgb(0, 81, 5);
 
     /* ************************   Shadows   ************************* */ 
     --colored-shadow: rgba(28,121,9,0.15);
@@ -222,3 +224,19 @@ main.activa {
             padding: 12px 15px;
             text-transform: capitalize;
         }
+
+/* ******************************************************** Errores ********************************************************* */
+
+.seccion-mensaje p{
+    font-size: 21px;
+    text-transform: initial;
+    font-weight: 600;
+}
+
+.seccion-mensaje p.error{
+    color: var(--color-error);
+}
+
+.seccion-mensaje p.correcto{
+    color: var(--color-correcto);
+}
