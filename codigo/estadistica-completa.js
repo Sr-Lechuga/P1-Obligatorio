@@ -120,9 +120,21 @@ function mostrarDetalleEdades() {
     document.querySelector('.percent.mayores').style = `--percentage:${ratio_mayores_total};`;
     document.querySelector('.percent.mayores .number h2').innerHTML = `${ratio_mayores_total*100}<span>%</span>`;
 
+    /* Animation */
+    document.querySelector('.percent.mayores').classList.remove('active');
+    setTimeout(() => {
+        document.querySelector('.percent.mayores').classList.add('active');
+    }, "100");
+
     let ratio_menores_total = menoresPorDepartamento[departamento] === undefined ? 0 : menoresPorDepartamento[departamento]/censadosPorDepartamento[departamento];
     document.querySelector('.percent.menores').style = `--percentage:${ratio_menores_total};`;
     document.querySelector('.percent.menores .number h2').innerHTML = `${ratio_menores_total*100}<span>%</span>`;
+    
+    /*Animation*/
+    document.querySelector('.percent.menores').classList.remove('active');
+    setTimeout(() => {
+        document.querySelector('.percent.menores').classList.add('active');
+    }, "100");
 
 }
 window.addEventListener("load",() =>{
@@ -136,4 +148,5 @@ window.addEventListener("load",() =>{
     cargaTabla();
 
     document.querySelector("#s_departamento").addEventListener('change',mostrarDetalleEdades);
+
 });
