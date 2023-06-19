@@ -447,6 +447,7 @@ main {
             font-size: 1.3em;
             font-weight: 400;
             min-width: 250px;
+            text-transform: capitalize;
         }
 
     .selector-departamento .container
