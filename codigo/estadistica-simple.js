@@ -3,7 +3,7 @@ mi_sistema.censita_logueado = 'invitado';
 
 /* Elementos HTML*/
 const mainContainer = document.querySelector("main");
-const tablaPendientes = document.querySelector("main .tabla-pendientes");
+const tablaEstadisticas = document.querySelector("main .tabla-estadisticas");
 
 /* Cosntantes y variables globales*/
 let censadosPorDepartamento = {},
@@ -13,7 +13,6 @@ let censadosPorDepartamento = {},
     trabajadoresPorDepartamento = {};
 
 /* Funciones */
-
 /* Devuelve los datos de la tabla por cada departamento*/
 function retornarDatosPorDepartamento() {
 
@@ -37,8 +36,47 @@ function retornarDatosPorDepartamento() {
 
 /* Cargar la tabla con los datos de censos requeridos*/
 function cargarTabla() {
-    
+    /* Recupera los valores en tiempo real de los censos*/
+    retornarDatosPorDepartamento();
+
+    /*Crea el encabezado*/
+    tablaEstadisticas.innerHTML = 
+    `<thead>
+        <tr>
+            <th>Departamento</th>
+            <th>Estudian</th>
+            <th>No trabajan</th>
+            <th>Dependientes o independientes</th>
+            <th>Porcentaje del total de censados</th>
+        </tr>
+    </thead>`;
+
+    /* Crea el cuerpo de la tabla */
+    tablaEstadisticas.innerHTML += '<tbody>';
+    mi_sistema.departamentos.forEach(departamento =>{
+        if (departamento === 'default')
+            return;
+
+        let censados = censadosPorDepartamento[departamento] === undefined ? 0 : censadosPorDepartamento[departamento],
+            total = totalCensosPorDepartamento[departamento] === undefined ? 0 : totalCensosPorDepartamento[departamento],
+            porcentaje = total === 0 ? 0 : parseInt((censados/total) * 100);
+
+        tablaEstadisticas.querySelector('tbody').innerHTML += 
+        `<tr>
+            <td>${departamento}</td>
+            <td>${estudianPorDepartamento[departamento] === undefined ? '0' : estudianPorDepartamento[departamento]}</td>
+            <td>${noTrabajanPorDepartamento[departamento] === undefined ? '0' : noTrabajanPorDepartamento[departamento]}</td>
+            <td>${trabajadoresPorDepartamento[departamento] === undefined ? '0' : trabajadoresPorDepartamento[departamento]}</td>
+            <td>${porcentaje}%</td>
+        </tr>`;
+    });
+    tablaEstadisticas.innerHTML += '</tbody>';
+
+
 }
+
 window.addEventListener("load",() =>{
     mainContainer.classList.add("activa");
+
+    cargarTabla();
 });

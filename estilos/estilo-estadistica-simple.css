@@ -156,4 +156,9 @@ main.activa {
         .tabla-estadisticas td{
             text-align: center;
             padding: 12px 15px;
+            text-transform: initial;
+        }
+
+        .tabla-estadisticas td{
+            text-transform: capitalize;
         }
