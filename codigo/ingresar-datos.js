@@ -1,6 +1,5 @@
 const mi_sistema = new Sistema();
-mi_sistema.censita_logueado = 'sparedes';
-// mi_sistema.censita_logueado = 'invitado';
+let esteModo = '';
 
 /* ********************************************* Auxiliares ********************************************************** */
 function cargarDepartamentos() {
@@ -153,11 +152,19 @@ function verificarCedula() {
 
         if (mi_sistema.recuperarEstadoCenso(cedula) === ''){
             
-            if (mi_sistema.recuperarCensistaLogueado === 'invitado') {
-                /*Si es invitado, pre-ingresa*/
-                document.querySelector("#btn_preingresar").style.display = 'inline-block';
-                document.querySelector('#btn_eliminar').style.display = 'none';
-                document.querySelector('#btn_censar').style.display = 'none';
+            if (mi_sistema.recuperarCensistaLogueado() === 'invitado') {
+                if (esteModo !== 'eliminar') {
+                    /*Si es invitado, pre-ingresa*/
+                    document.querySelector("#btn_preingresar").style.display = 'inline-block';
+                    document.querySelector('#btn_eliminar').style.display = 'none';
+                    document.querySelector('#btn_censar').style.display = 'none';
+                }else{
+                    document.querySelector(".mensaje-error.cedula").innerHTML = `La cedula no tiene registros. Dirijase a ingresar para ingresarla`;
+                    document.querySelector("#btn_preingresar").style.display = 'none';
+                    document.querySelector('#btn_eliminar').style.display = 'none';
+                    document.querySelector('#btn_censar').style.display = 'none';
+                    invalidarFormulario();
+                }
             
             }else{
                 /*Si es censista, censa*/
@@ -170,7 +177,7 @@ function verificarCedula() {
             
             mostrarDatos(cedula);
             
-            if (mi_sistema.recuperarCensistaLogueado === 'invitado') {
+            if (mi_sistema.recuperarCensistaLogueado() === 'invitado') {
             /*Si es invitado, elimina censo pre-ingresado */
                 /*Invalida formulario para que no se cambien los datos, solo se pueden eliminar*/
                 invalidarFormulario();
@@ -209,6 +216,15 @@ function verificarCedula() {
 
 function gestionDeEventos() {
     
+
+    var urlParams = new URLSearchParams(window.location.search),
+        usuario = urlParams.get("usuario"),
+        modo = urlParams.get("modo");
+
+    if(modo === 'eliminar')
+        esteModo = modo;
+
+    mi_sistema.censita_logueado = usuario;
     /* Carga el menu de navegacion superior*/
     mi_sistema.cargarNavegacion(document.querySelector('header'));
 
@@ -225,7 +241,7 @@ function gestionDeEventos() {
     document.querySelector("#btn_preingresar").addEventListener("click",preIngresarDatos);
 
     /* Estilo general del sistema */
-    if (mi_sistema.recuperarCensistaLogueado() === 'invitado') {
+    if (usuario === 'invitado') {
         document.body.classList.remove('censista');
     }else{
         document.body.classList.add('censista');    

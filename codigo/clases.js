@@ -495,8 +495,8 @@ class Sistema {
             <a href="index.html" class="logo"><img src="img/logo_censo.svg" alt="logo"></a>
             <nav class="navbar">
                 <a href="invitado-principal.html">Inicio</a>
-                <a href="gestionar-informacion.html">Ingresar informaci&oacute;n</a>
-                <a href="gestionar-informacion.html">Eliminar informaci&oacute;n</a>
+                <a href="gestionar-informacion.html?usuario=invitado&modo=ingresar">Ingresar informaci&oacute;n</a>
+                <a href="gestionar-informacion.html?usuario=invitado&modo=eliminar">Eliminar informaci&oacute;n</a>
                 <a href="estadistica-simple.html">Estad&iacute;sticas</a>
             </nav>`;
         
@@ -505,7 +505,7 @@ class Sistema {
             `<a href="index.html" class="logo"><img src="img/logo_censo.svg" alt="logo"></a>
             <nav class="navbar">
                 <a href="censista-principal.html">Inicio</a>
-                <a href="gestionar-informacion.html">Ingresar informaci&oacute;n</a>
+                <a href="gestionar-informacion.html?usuario=censista">Ingresar informaci&oacute;n</a>
                 <a href="validar-datos.html">Consultar informaci&oacute;n</a>
                 <a href="reasignar.html">Reasignar censista</a>
                 <a href="estadisticas-completas.html">Estad&iacute;sticas</a>

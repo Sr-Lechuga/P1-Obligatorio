@@ -12,7 +12,11 @@ function gestionDeEventos() {
     mi_sistema.cargarNavegacion(document.querySelector('header'));
     
     btnIngresarDatos.addEventListener("click", () => {
-        window.location.assign("gestionar-informacion.html");
+        var usuario = "censista";
+
+        var urlDestino = "gestionar-informacion.html?usuario=" + encodeURIComponent(usuario);
+        window.location.href = urlDestino;
+
     });
     
     btnValidarDatos.addEventListener("click", () => {
