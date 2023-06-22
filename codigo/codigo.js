@@ -44,9 +44,9 @@ function mostrarErroresRegistro(errores) {
 
 function registrarCensista() {
     /*Elementos (usados para CSS)*/
-    const i_nombreCensista = document.querySelector(".censista [name='nombre']"),
-    i_usuarioCensista = document.querySelector(".censista [name='usuario']"),
-    i_contraseniaCensista = document.querySelector(".censista [name='password']");
+    const i_nombreCensista = document.querySelector("#login .censista [name='nombre']"),
+    i_usuarioCensista = document.querySelector("#login .censista [name='usuario']"),
+    i_contraseniaCensista = document.querySelector("#login .censista [name='password']");
 
     /* Valores, usados para logica*/
     const nombre = i_nombreCensista.value,
@@ -59,32 +59,32 @@ function registrarCensista() {
     mostrarErroresRegistro(resultado);
 
     if (resultado.length === 0){
-        document.querySelector(".censista .mensajes-error.general").innerHTML = "Registrado exitosamente!";
-        document.querySelector("#iniciar_sesion_censistas").click();
+        document.querySelector("#login .censista .mensajes-error.general").innerHTML = "Registrado exitosamente!";
+        document.querySelector("#login #iniciar_sesion_censistas").click();
     }
 }
 
 /* **************************************************** Inicio de Sesion Censista ********************************************************** */
 
 function iniciarSesionCensista() {
-    const usuario = document.querySelector(".censista [name='usuario']"),
-          contrasenia = document.querySelector(".censista [name='password']"),
-          errorUsuario = document.querySelector(".censista .mensajes-error.usuario"),
-          errorContrasenia = document.querySelector(".censista .mensajes-error.contrasenia");
+    const usuario = document.querySelector("#login .censista [name='usuario']"),
+          contrasenia = document.querySelector("#login .censista [name='password']"),
+          errorUsuario = document.querySelector("#login .censista .mensajes-error.usuario"),
+          errorContrasenia = document.querySelector("#login .censista .mensajes-error.contrasenia");
     
     borrarMensajeError(errorUsuario,usuario);
     borrarMensajeError(errorContrasenia,contrasenia);
-    borrarMensajeError(document.querySelector(".censista .mensajes-error.general"),usuario);
-    borrarMensajeError(document.querySelector(".censista .mensajes-error.general"),contrasenia);
+    borrarMensajeError(document.querySelector("#login .censista .mensajes-error.general"),usuario);
+    borrarMensajeError(document.querySelector("#login .censista .mensajes-error.general"),contrasenia);
 
     if (usuario.value.length > 0 && contrasenia.value.length > 0) {
         if (mi_sistema.esIngresoSistemaValido(usuario.value,contrasenia.value)){
-            
-            window.location = "censista-principal.html";
+            document.querySelector("#login").style.display = "none";
+            document.querySelector("#censista-principal").style.display = "block";
         }
         else{
-            mostrarMensajeError(document.querySelector(".censista .mensajes-error.general"),"Usuario o Contraseña inválidos.",usuario);
-            mostrarMensajeError(document.querySelector(".censista .mensajes-error.general"),"Usuario o Contraseña inválidos.",contrasenia);
+            mostrarMensajeError(document.querySelector("#login .censista .mensajes-error.general"),"Usuario o Contraseña inválidos.",usuario);
+            mostrarMensajeError(document.querySelector("#login .censista .mensajes-error.general"),"Usuario o Contraseña inválidos.",contrasenia);
         }
     } else {
         if (usuario.value.length <= 0)
@@ -96,7 +96,7 @@ function iniciarSesionCensista() {
 
 /* **************************************************** Orquestador de ingreso Censista********************************************************** */
 function gestionIngresoCensista() {
-    const btnIngresoCensista = document.querySelector(".censista input.button");
+    const btnIngresoCensista = document.querySelector("#login .censista input.button");
 
     if (btnIngresoCensista.value === "Registrate")
         registrarCensista();
@@ -106,7 +106,34 @@ function gestionIngresoCensista() {
 
 function gestionIngresoInvitado() {
     //Gestion token?
-    window.location = "invitado-principal.html";
+    document.querySelector("#login").style.display = "none";
+    document.querySelector("#invitado-principal").style.display = "block";
+    mi_sistema.censita_logueado = 'invitado';
+    cargarVentanaPrincipalInvitado();
+}
+
+function cargarVentanaPrincipalInvitado(){
+    const btnIngresarDatos = document.querySelector("#invitado-principal .main-option.ingresar"),
+        btnEliminarDatos = document.querySelector("#invitado-principal .main-option.eliminar"),
+        btnConsultarEstadisticas = document.querySelector("#invitado-principal .main-option.consultar");
+
+    mi_sistema.cargarNavegacion(document.querySelector('#invitado-principal header'));
+
+    const panelInvitadoPrincipal = document.querySelector("#ininvitado-principal");
+    btnIngresarDatos.addEventListener("click", () => {
+        panelInvitadoPrincipal.style.display = "none";
+        document.querySelector("gestionar-informacion").style.display = "block";
+    });
+
+    btnEliminarDatos.addEventListener("click", () => {
+        panelInvitadoPrincipal.style.display = "none";
+        document.querySelector("gestionar-informacion").style.display = "block";
+    });
+
+    btnConsultarEstadisticas.addEventListener("click", () => {
+        panelInvitadoPrincipal.style.display = "none";
+        document.querySelector("estadistica-simple").style.display = "block";
+    });
 }
 
 /* **************************************************** Orquestador de eventos ********************************************************** */
