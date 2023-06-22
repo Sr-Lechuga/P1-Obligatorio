@@ -2,7 +2,6 @@ const MIN_EDAD = 0,
       MAX_EDAD = 130,
       FORMATO_CEDULA = /([0-9]{1}\.[0-9]{3}\.[0-9]{3}-[0-9]{1}|[0-9]{7}-[0-9]|[0-9]{8})/g,
       PRE_INGRESADO = '1', CENSADO = '2', //Estados de censo
-      TOTAL_CENSOS = 3500000;
       CODIGO_VALIDACION = [2,9,8,7,6,3,4];
 
 class Sistema {
@@ -13,7 +12,6 @@ class Sistema {
         this.departamentos = [];
         this.censita_logueado = '';
         this.censos = [];
-        this.totalCensos = TOTAL_CENSOS;
         this.PRE_INGRESADO = PRE_INGRESADO;
         this.CENSADO = CENSADO;
         this.cargaValoresInicialesOcupaciones();
@@ -22,11 +20,13 @@ class Sistema {
         this.cargaValoresInicialesCensos();
     }
 
+
     /* Agrega todos los valores disponibles para la base de datos de los departamentos*/
     cargaValoresInicialesDepartamentos(){
         this.departamentos.push('default');
         this.departamentos.push('montevideo');
         this.departamentos.push('canelones');
+        this.departamentos.push('artigas');
         this.departamentos.push('cerro largo');
         this.departamentos.push('colonia');
         this.departamentos.push('durazno');
@@ -58,21 +58,49 @@ class Sistema {
     cargaValoresInicialesCensistas(){
         this.censistas.push(new Censista('Solomeo','sparedes','Contrasenia1'));
         this.censistas.push(new Censista('Armando','abanquito','Contrasenia2'));
-        this.censistas.push(new Censista('Jimmy','jneutron','Contrasenia3'));
-        this.censistas.push(new Censista('Pedro','ppicapiedras','Contrasenia4'));
-        this.censistas.push(new Censista('Sirius','sblack','Contrasenia5'));
-        this.censistas.push(new Censista('Marcia','mnito','Contrasenia6'));
+        this.censistas.push(new Censista('Marcia','mnito','Contrasenia3'));
     }
 
     /* Carga los valores inciales para los censos registrados en el sistema*/
     cargaValoresInicialesCensos(){
         this.preIngresarDatosCenso('6.212.527-4','Patricio','Estrella',16,'montevideo','no trabaja');
-        this.censos[0].censista_asignado = 'sparedes';
         this.preIngresarDatosCenso('5.152.535-8','Bob','Esponja',17,'montevideo','dependiente');
-        this.censos[1].censista_asignado = 'sparedes';
-        this.ingresarDatosCenso('1.555.094-5','Don','Cangrejo',42,'montevideo','independiente');
-        this.ingresarDatosCenso('4.646.319-7','Sr','Lechuga',17,'montevideo','independiente');
-        this.ingresarDatosCenso('6.076.334-7','Arenita','Mejillas',26,'canelones','estudiante');
+        this.preIngresarDatosCenso('7.630.733-5','Timmy','Turner',14,'tacuarembo','estudiante');
+        this.preIngresarDatosCenso('1.054.780-4','Daphne','Blake',27,'flores','dependiente');
+        this.preIngresarDatosCenso('1.051.693-6','Buzz','Lightyear',37,'florida','independiente');
+        this.preIngresarDatosCenso('3.453.227-1','Mabel','Pines',12,'treinta y tres','estudiante');
+        this.preIngresarDatosCenso('7.632.345-4','Dipper','Pines',15,'treinta y tres','estudiante');
+        this.preIngresarDatosCenso('3.453.172-2','Darwin','Watterson',57,'canelones','no trabaja');
+        this.preIngresarDatosCenso('7.630.572-9','Jake','El Perro',34,'soriano','independiente');
+        this.preIngresarDatosCenso('4.287.056-2','Pizza','Steve',25,'salto','dependiente');
+        this.preIngresarDatosCenso('7.507.643-2','Puro','Hueso',117,'artigas','no trabaja');
+        this.preIngresarDatosCenso('1.053.768-5','Profesor','Utonio',37,'canelones','dependiente');
+        this.preIngresarDatosCenso('7.628.823-4','Finn','El Humano',17,'soriano','estudiante');
+        this.preIngresarDatosCenso('7.631.715-6','Gumball','Watterson',13,'montevideo','estudiante');
+        this.preIngresarDatosCenso('1.053.663-1','Ben','Tennyson',47,'lavalleja','independiente');
+        this.ingresarDatosCenso('4.173.371-3','Gwen','Tennyson',42,'lavalleja','dependiente');
+        this.ingresarDatosCenso('3.453.877-0','Calamardo','Tentaculos',51,'florida','dependiente');
+        this.ingresarDatosCenso('1.054.565-2','Peter','Pan',21,'colonia','no trabaja');
+        this.ingresarDatosCenso('1.053.963-3','Rayo','McQueen',24,'rocha','dependiente');
+        this.ingresarDatosCenso('3.452.826-6','Edna','Moda',39,'maldonado','independiente');
+        this.ingresarDatosCenso('2.899.818-6','Madame','Foster',66,'cerro largo','independiente');
+        this.ingresarDatosCenso('3.454.097-5','Banana','Joe',47,'rivera','no trabaja');
+        this.ingresarDatosCenso('7.945.996-3','Steven','Cuarzo',26,'paysandu','independiente');
+        this.ingresarDatosCenso('4.304.091-6','Drake','Parker',31,'durazno','no trabaja');
+        this.ingresarDatosCenso('7.939.010-5','Sheldon','Plankton',33,'san jose','independiente');
+        this.ingresarDatosCenso('1.025.661-9','Josh','Nichols',37,'maldonado','dependiente');
+        this.ingresarDatosCenso('3.122.322-3','Marcia','Noe',23,'canelones','estudiante');
+        this.ingresarDatosCenso('4.773.058-5','Karma','Joe',36,'canelones','dependiente');
+        this.ingresarDatosCenso('2.555.917-1','Fito','Plankton',66,'montevideo','no trabaja');
+        this.ingresarDatosCenso('3.454.274-1','Rico','Leta',46,'soriano','dependiente');
+
+        // Asignar un censista a los censos en estado CENSADO
+        this.censos.forEach(censo => {
+            if(censo.estado === CENSADO){
+                let indiceCenso = Math.floor(Math.random() * this.censistas.length);
+                censo.censista_asignado = this.censistas[indiceCenso].usuario;
+            }
+        })
     }
 
     /* Toma una cedula y la formatea para que coincida con el requerido por el sistema*/
@@ -253,8 +281,8 @@ class Sistema {
             return mensajesError;
         /* Si no hay errores*/
         }else{
-            let indexCensista = Math.floor(Math.random() * this.censistas.length);
-            preIngreso.censista_asignado = this.censistas[indexCensista].usuario;
+            let indiceCenso = Math.floor(Math.random() * this.censistas.length);
+            preIngreso.censista_asignado = this.censistas[indiceCenso].usuario;
             preIngreso.estado = PRE_INGRESADO;
             this.censos.push(preIngreso);
             return mensajesError;
@@ -423,6 +451,10 @@ class Sistema {
             digitoVerificador += cedulaFormateada[i] * CODIGO_VALIDACION[i]; 
         }
         digitoVerificador = 10 - (digitoVerificador % 10);
+
+        if (digitoVerificador === 10) {
+            digitoVerificador = 0;
+        }
 
         return parseInt(cedulaFormateada[cedulaFormateada.length-1]) === digitoVerificador;
     }
